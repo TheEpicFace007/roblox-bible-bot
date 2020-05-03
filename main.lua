@@ -1,6 +1,15 @@
 math.randomseed(tick()) -- math.randomseed is used to get a true random for the answers so it wont be always be the same
 local HttpService = game:GetService "HttpService"
 local Players = game:GetService("Players")
+-- config
+__DEFAULTCONFIG = {
+    adDelay = 30;
+}
+if not pcall(readfile,"bible_bot_config.json") then
+    writefile("bible_bot_config.json","")
+end
+config = HttpService:JSONDecode(readfile("bible_bot_config.json"))
+
 -- bible bot window lib
 panel =  Window.new("Bible bot configuration panel")
 -- Advertisment timer label
@@ -13,25 +22,25 @@ adDelay.Max   = 900
 adDelay.Value = 30
 adDelay.Label = "Delay within each advertisment"
 -- ad timer preset
-timePreset           = panel.AddElement(panel,"Dropdown")
-timePreset.Label     = "Time preset for the delay within each ad"
-timePreset.Selected  = 0
-timePreset.Options   = {"30 Seconds";"1 minute ";"2 minute and 30 seconds";"5 minutes";"10 minutes";"15 minutes"}
+delayPreset           = panel.AddElement(panel,"Dropdown")
+delayPreset.Label     = "Time preset for the delay within each ad"
+delayPreset.Selected  = 0
+delayPreset.Options   = {"30 Seconds";"1 minute ";"2 minute and 30 seconds";"5 minutes";"10 minutes";"15 minutes"}
 -- apply ad timer preset
 applyPreset = panel.AddElement(panel,"Button")
 applyPreset.Label = "Apply ad timer preset"
 applyPreset.OnClick = function()
-    if timePreset.Selected     ==  0  then
+    if delayPreset.Selected     ==  0  then
         adDelay.Value = 30
-    elseif timePreset.Selected ==  1  then
+    elseif delayPreset.Selected ==  1  then
         adDelay.Value = 60
-    elseif timePreset.Selected ==  2  then
+    elseif delayPreset.Selected ==  2  then
         adDelay.Value = 138
-    elseif timePreset.Selected ==  3  then
+    elseif delayPreset.Selected ==  3  then
         adDelay.Value = 300
-    elseif timePreset.Selected ==  4  then
+    elseif delayPreset.Selected ==  4  then
         adDelay.Value = 600
-    elseif timePreset.Selected ==  5 then
+    elseif delayPreset.Selected ==  5 then
         adDelay.Value = 900
     end
 
