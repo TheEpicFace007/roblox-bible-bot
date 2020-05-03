@@ -7,11 +7,11 @@ panel =  Window.new("Bible bot configuration panel")
 adLabel = panel.AddElement(panel,"Label")
 adLabel.Text = "Adverisment configuration"
 -- ad_timer
-ad_timer = panel.AddElement(panel,"IntSlider")
-ad_timer.Min   = 15
-ad_timer.Max   = 900
-ad_timer.Value = 30
-ad_timer.Label = "Delay within each advertisment"
+adDelay = panel.AddElement(panel,"IntSlider")
+adDelay.Min   = 15
+adDelay.Max   = 900
+adDelay.Value = 30
+adDelay.Label = "Delay within each advertisment"
 -- ad timer preset
 timePreset           = panel.AddElement(panel,"Dropdown")
 timePreset.Label     = "Time preset for the delay within each ad"
@@ -22,17 +22,17 @@ applyPreset = panel.AddElement(panel,"Button")
 applyPreset.Label = "Apply ad timer preset"
 applyPreset.OnClick = function()
     if timePreset.Selected     ==  0  then
-        ad_timer.Value = 30
+        adDelay.Value = 30
     elseif timePreset.Selected ==  1  then
-        ad_timer.Value = 60
+        adDelay.Value = 60
     elseif timePreset.Selected ==  2  then
-        ad_timer.Value = 138
+        adDelay.Value = 138
     elseif timePreset.Selected ==  3  then
-        ad_timer.Value = 300
+        adDelay.Value = 300
     elseif timePreset.Selected ==  4  then
-        ad_timer.Value = 600
+        adDelay.Value = 600
     elseif timePreset.Selected ==  5 then
-        ad_timer.Value = 900
+        adDelay.Value = 900
     end
 
 end
@@ -231,7 +231,7 @@ ad = {
     "Keep studying the bible by chatting !verse to study the verse of the bible. There is also others commands. Chat !help to know others commands";
     "Chat !help to know all the availaible command of bible bot"
 }
-oldAdTimerValue = ad_timer.Value
+oldAdTimerValue = adDelay.Value
 oldState = isNotDoingAd.State
 --[[ game:GetService("RunService").Heartbeat:Connect(function()
 
@@ -244,7 +244,7 @@ coroutine.resume(coroutine.create(function()
 
         if isNotDoingAd.State == false then
             chat(ad[math.random(#ad)])
-            wait(ad_timer.Value)
+            wait(adDelay.Value)
         end
     end
 end))
