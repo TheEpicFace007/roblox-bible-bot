@@ -51,19 +51,15 @@ applyPreset.OnClick = function()
     if delayPreset.Selected     ==  0  then
         adDelay.Value = 30
         config.delayPreset = 0
-        config.adDelay = 30
     elseif delayPreset.Selected ==  1  then
         adDelay.Value = 60
         config.delayPreset = 1
-        config.adDelay = 60
     elseif delayPreset.Selected ==  2  then
         adDelay.Value = 138
         config.delayPreset = 2
-        config.adDelay = 138
     elseif delayPreset.Selected ==  3  then
         adDelay.Value = 300
         config.delayPreset = 3
-        config.adDelay = 300
     elseif delayPreset.Selected ==  4  then
         adDelay.Value = 600
         config.delayPreset = 4
@@ -71,7 +67,6 @@ applyPreset.OnClick = function()
     elseif delayPreset.Selected ==  5 then
         adDelay.Value = 900
         config.delayPreset = 5
-        config.adDelay = 900
     end
     updateConfig()
 end
@@ -119,6 +114,8 @@ AddBlacklistButton_Remove_User = panel.AddElement(panel,"Button")
             end
         end)
     end
+--
+
 --
 endpoint = "http://labs.bible.org/api/?passage=random&type=json"
 getVerse = function()
@@ -284,5 +281,11 @@ coroutine.resume(coroutine.create(function()
     while wait() do
         config.doNotWelcome = isGreeter.State
         updateConfig()
+    end
+end))
+-- ad delay config coroutine
+coroutine.resume(coroutine.create(function()
+    while wait() do
+        config.adDelay
     end
 end))
