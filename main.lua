@@ -2,30 +2,41 @@
 -- it's for testing purpose, do not touch if you arent developping the scrip
 -- it's meant for protosmasher widnow lib that authorize you to only have 1 window
 -- that have the same name
-local __ISTESTING = true
+local __IS_TESTING = true
 -- math.randomseed is used to get a true random for the answers so the answer wont be always be the same
 math.randomseed(tick())
 local HttpService = game:GetService "HttpService"
 local Players = game:GetService("Players")
 -- config
-__DEFAULTCONFIG = {
+__DEFAULT_SETTING_CONFIG = {
     adDelay = 30;
     delayPreset = 1;
     doNotWelcome = false;
     isNotDoingAd = false;
     blacklisted = {};
+}
+
+__DEFAULT_CUSTOM_MESSAGE = {
     CustommWelcomeMessage = {};
     CustomPrayAnswer = {};
     CustomConffesionAnswer = {};
     CustomBotAdvertisment = {}
 }
 if not pcall(readfile,"bible_bot_config.json") then
-    writefile("bible_bot_config.json",HttpService:JSONEncode(__DEFAULTCONFIG))
+    writefile("bible_bot_config.json",HttpService:JSONEncode(__DEFAULT_SETTING_CONFIG))
 end
-config = HttpService:JSONDecode(readfile("bible_bot_config.json"))
-updateConfig = function() writefile("bible_bot_config.json",HttpService:JSONEncode(config)) end
+
+if not pcall(readfile,"bible_bot_custom_message.json") then
+    writefile("bible_bot_custom_message.json",HttpService:JSONEncode(__DEFAULT_CUSTOM_MESSAGE))
+end
+-- setting
+settingConfig = HttpService:JSONDecode(readfile("bible_bot_config.json"))
+updateSettingConfig = function() writefile("bible_bot_config.json",HttpService:JSONEncode(settingConfig)) end
+-- custom message
+customMessageConfig = HttpService:JSONDecode(readfile("bible_bot_custom_message.json"))
+updateMessageConfig = function() writefile("bible_bot_custom_message.json",HttpService:JSONEncode(customMessageConfig)) end
 -- bible bot window lib
-if not __ISTESTING then
+if not __IS_TESTING then
     panel =  Window.new("Bible bot configuration panel")
 else
     panel =  Window.new("Bible bot configuration panel " .. math.random(9) .. math.random(9) .. math.random(9))
@@ -37,12 +48,12 @@ adLabel = panel.AddElement(panel,"Label")
 adDelay = panel.AddElement(panel,"IntSlider")
     adDelay.Min   = 15
     adDelay.Max   = 900
-    adDelay.Value = config.adDelay
+    adDelay.Value = settingConfig.adDelay
     adDelay.Label = "Delay within each advertisment"
 -- ad timer preset
 delayPreset           = panel.AddElement(panel,"Dropdown")
     delayPreset.Label     = "Time preset for the delay within each ad"
-    delayPreset.Selected  = config.delayPreset
+    delayPreset.Selected  = settingConfig.delayPreset
     delayPreset.Options   = {"30 Seconds";"1 minute ";"2 minute and 30 seconds";"5 minutes";"10 minutes";"15 minutes"}
 -- apply ad timer preset
 applyPreset = panel.AddElement(panel,"Button")
@@ -50,25 +61,25 @@ applyPreset.Label = "Apply ad timer preset"
 applyPreset.OnClick = function()
     if delayPreset.Selected     ==  0  then
         adDelay.Value = 30
-        config.delayPreset = 0
+        settingConfig.delayPreset = 0
     elseif delayPreset.Selected ==  1  then
         adDelay.Value = 60
-        config.delayPreset = 1
+        settingConfig.delayPreset = 1
     elseif delayPreset.Selected ==  2  then
         adDelay.Value = 138
-        config.delayPreset = 2
+        settingConfig.delayPreset = 2
     elseif delayPreset.Selected ==  3  then
         adDelay.Value = 300
-        config.delayPreset = 3
+        settingConfig.delayPreset = 3
     elseif delayPreset.Selected ==  4  then
         adDelay.Value = 600
-        config.delayPreset = 4
-        config.adDelay = 600
+        settingConfig.delayPreset = 4
+        settingConfig.adDelay = 600
     elseif delayPreset.Selected ==  5 then
         adDelay.Value = 900
-        config.delayPreset = 5
+        settingConfig.delayPreset = 5
     end
-    updateConfig()
+    updateSettingConfig()
 end
 -- horizontal separator
 panel.AddElement(panel,"HorizontalSeparator")
@@ -78,16 +89,16 @@ option = panel.AddElement(panel,"Label")
 -- is not doing ad checkbox
 isNotDoingAd = panel.AddElement(panel,"Checkbox")
     isNotDoingAd.Label = "Disable biblebot advertisement"
-    isNotDoingAd.State = config.isNotDoingAd
+    isNotDoingAd.State = settingConfig.isNotDoingAd
 -- is not doing greeting checkbox
 isGreeter = panel.AddElement(panel,"Checkbox")
-    isGreeter.State = config.doNotWelcome
+    isGreeter.State = settingConfig.doNotWelcome
     isGreeter.Label = "Disable biblebot greeting"
 -- add blacklisted user to using the bot
 panel.AddElement(panel,"HorizontalSeparator")
 blacklisted = panel.AddElement(panel,"List")
     blacklisted.Label = "Blacklisted people from using bible bot"
-    blacklisted.Items = config.blacklisted
+    blacklisted.Items = settingConfig.blacklisted
     blacklisted.ItemsToShow = 3
 
 AddBlacklistTextbox = panel.AddElement(panel,"TextInput")
@@ -97,9 +108,9 @@ AddBlacklistTextbox = panel.AddElement(panel,"TextInput")
 AddBlacklistButton_Add_User = panel.AddElement(panel,"Button")
     AddBlacklistButton_Add_User.Label = "Blacklist user"
     AddBlacklistButton_Add_User.OnClick = function()
-        table.insert(config.blacklisted,AddBlacklistTextbox.Value)
-        blacklisted.Items = config.blacklisted
-        updateConfig()
+        table.insert(settingConfig.blacklisted,AddBlacklistTextbox.Value)
+        blacklisted.Items = settingConfig.blacklisted
+        updateSettingConfig()
     end
 
 AddBlacklistButton_Remove_User = panel.AddElement(panel,"Button")
@@ -108,17 +119,22 @@ AddBlacklistButton_Remove_User = panel.AddElement(panel,"Button")
         pcall(function()
             local ans = ask_prompt("Are you sure you want to give back " .. blacklisted.Items[blacklisted.Selected + 1] .. " the right to use bible bot?","Yes","No")
             if ans == 1 then
-                table.remove(config.blacklisted,blacklisted.Selected + 1)
-                blacklisted.Items = config.blacklisted
-                updateConfig()
+                table.remove(settingConfig.blacklisted,blacklisted.Selected + 1)
+                blacklisted.Items = settingConfig.blacklisted
+                updateSettingConfig()
             end
         end)
     end
 -- Custom message
-custom = Window.new("Custom messages of bible bot")
+if not __IS_TESTING then
+    custom = Window.new("Custom messages of bible bot")
+else
+    custom = Window.new("Custom messages of bible bot " .. math.random(9) .. math.random(9) .. math.random(9))
+end
 customDesc = custom.AddElement(custom,"Label")
-    customDesc.Text = "Add new message that bible bot will says"
--- 
+    customDesc.Text = "Add new message that bible bot will says in the following situation:\n- When a player join the game(welcome message)\n- An answer to a conffesion\n- An answer to a player pray\nAn bot advertisment"
+
+--
 
 --
 endpoint = "http://labs.bible.org/api/?passage=random&type=json"
@@ -276,20 +292,20 @@ end))
 -- update advertisement config coroutine
 coroutine.resume(coroutine.create(function()
     while wait() do
-        config.isNotDoingAd = isNotDoingAd.State
-        updateConfig()
+        settingConfig.isNotDoingAd = isNotDoingAd.State
+        updateSettingConfig()
     end
 end))
 -- update advertisment corutine
 coroutine.resume(coroutine.create(function()
     while wait() do
-        config.doNotWelcome = isGreeter.State
-        updateConfig()
+        settingConfig.doNotWelcome = isGreeter.State
+        updateSettingConfig()
     end
 end))
 -- ad delay config coroutine
 coroutine.resume(coroutine.create(function()
     while wait() do
-        config.adDelay = adDelay.Value
+        settingConfig.adDelay = adDelay.Value
     end
 end))
