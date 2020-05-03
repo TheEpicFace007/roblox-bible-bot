@@ -1,4 +1,4 @@
-math.randomseed(tick())
+math.randomseed(tick()) -- math.randomseed is used to get a true random for the answers so it wont be always be the same
 local HttpService = game:GetService "HttpService"
 local Players = game:GetService("Players")
 -- bible bot window lib
@@ -34,6 +34,7 @@ applyPreset.OnClick = function()
     elseif timePreset.Selected ==  5 then
         ad_timer.Value = 900
     end
+
 end
 -- horizontal separator
 panel.AddElement(panel,"HorizontalSeparator")
