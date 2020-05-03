@@ -131,7 +131,7 @@ AddBlacklistButton_Remove_User = panel.AddElement(panel,"Button")
     AddBlacklistButton_Remove_User.Label = "Remove selected player from the bible bot blacklist"
     AddBlacklistButton_Remove_User.OnClick = function()
         pcall(function()
-            local ans = ask_prompt("Are you sure you want to give back " .. blacklisted.Items[blacklisted.Selected + 1] .. " the right to use bible bot?","Yes","No")
+            local ans = ask_prompt("Giving back bible bot access","Are you sure you want to give back " .. blacklisted.Items[blacklisted.Selected + 1] .. " the right to use bible bot?","Yes","No")
             if ans == 1 then
                 table.remove(settingConfig.blacklisted,blacklisted.Selected + 1)
                 blacklisted.Items = settingConfig.blacklisted
@@ -182,7 +182,7 @@ getVerse = function()
 end
 local t = tick()
 chat = function(content)
-    if not settingConfig.isBibleBotDisabled then return end
+    if settingConfig.isBibleBotDisabled then return end
     if tick() - t < 0.70 then
         wait(1)
     end
@@ -315,7 +315,7 @@ oldState = isNotDoingAd.State
 
 end)
  ]]
-
+__TIME_WITHIN_EACH__CONFIG_SAVE = 0.1
 -- advertisement corutine
 coroutine.resume(coroutine.create(function()
     while wait() do
@@ -329,21 +329,21 @@ end))
 
 -- update advertisement config coroutine
 coroutine.resume(coroutine.create(function()
-    while wait() do
+    while wait(__TIME_WITHIN_EACH__CONFIG_SAVE) do
         settingConfig.isNotDoingAd = isNotDoingAd.State
         updateSettingConfig()
     end
 end))
 -- update advertisment config corutine
 coroutine.resume(coroutine.create(function()
-    while wait() do
+    while wait(__TIME_WITHIN_EACH__CONFIG_SAVE) do
         settingConfig.doNotWelcome = isGreeter.State
         updateSettingConfig()
     end
 end))
 -- ad delay config coroutine
 coroutine.resume(coroutine.create(function()
-    while wait() do
+    while wait(__TIME_WITHIN_EACH__CONFIG_SAVE) do
         settingConfig.adDelay = adDelay.Value
         updateSettingConfig()
     end
@@ -352,13 +352,13 @@ end))
 coroutine.resume(coroutine.create(function()
     while wait() do
         settingConfig.isBibleBotDisabled = isBibleBotDisabled.State
-        updateSettingConfig()
+        updateSettingConfig(__TIME_WITHIN_EACH__CONFIG_SAVE)
     end
 end))
 -- show
 coroutine.resume(coroutine.create(function()
     while wait() do
         settingConfig.isHidingCustomMessageDesc = hideDesc.State
-        updateSettingConfig()
+        updateSettingConfig(__TIME_WITHIN_EACH__CONFIG_SAVE)
     end
 end))
