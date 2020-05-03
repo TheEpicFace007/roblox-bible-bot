@@ -114,7 +114,11 @@ AddBlacklistButton_Remove_User = panel.AddElement(panel,"Button")
             end
         end)
     end
---
+-- Custom message
+custom = Window.new("Custom messages of bible bot")
+customDesc = custom.AddElement(custom,"Label")
+    customDesc.Text = "Add new message that bible bot will says"
+-- 
 
 --
 endpoint = "http://labs.bible.org/api/?passage=random&type=json"
