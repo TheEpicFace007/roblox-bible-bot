@@ -13,7 +13,8 @@ __DEFAULT_SETTING_CONFIG = {
     delayPreset = 1;
     doNotWelcome = false;
     isNotDoingAd = false;
-    isBibleBotEnabled = true;
+    isBibleBotDisabled = false;
+    isHidingCustomMessageDesc = false;
     blacklisted = {};
 }
 
@@ -95,9 +96,12 @@ isNotDoingAd = panel.AddElement(panel,"Checkbox")
 isGreeter = panel.AddElement(panel,"Checkbox")
     isGreeter.State = settingConfig.doNotWelcome
     isGreeter.Label = "Disable biblebot greeting"
+    isGreeter.SameLine = true
 -- enable bible bot tick
-isBibleBotEnabled = panel.AddElement(panel,"Checkbox")
-    isBibleBotEnabled.State = settingConfig.isBibleBotEnabled
+isBibleBotDisabled = panel.AddElement(panel,"Checkbox")
+    isBibleBotDisabled.State = settingConfig.isBibleBotDisabled
+    isBibleBotDisabled.Label = "Disable bible bot"
+    isBibleBotDisabled.SameLine = true
 -- add blacklisted user to using the bot
 panel.AddElement(panel,"HorizontalSeparator")
 blacklisted = panel.AddElement(panel,"List")
@@ -112,13 +116,19 @@ AddBlacklistTextbox = panel.AddElement(panel,"TextInput")
 AddBlacklistButton_Add_User = panel.AddElement(panel,"Button")
     AddBlacklistButton_Add_User.Label = "Blacklist user"
     AddBlacklistButton_Add_User.OnClick = function()
+        if AddBlacklistTextbox.Value == "" then
+            AddBlacklistButton_Add_User.Label = "ERROR: Nothing is entered - enter a username"
+            wait(2)
+            AddBlacklistButton_Add_User.Label = "Blacklist user"
+            return
+        end
         table.insert(settingConfig.blacklisted,AddBlacklistTextbox.Value)
         blacklisted.Items = settingConfig.blacklisted
         updateSettingConfig()
     end
 
 AddBlacklistButton_Remove_User = panel.AddElement(panel,"Button")
-    AddBlacklistButton_Remove_User.Label = "Remmove someone from the blacklist"
+    AddBlacklistButton_Remove_User.Label = "Remove selected player from the bible bot blacklist"
     AddBlacklistButton_Remove_User.OnClick = function()
         pcall(function()
             local ans = ask_prompt("Are you sure you want to give back " .. blacklisted.Items[blacklisted.Selected + 1] .. " the right to use bible bot?","Yes","No")
@@ -129,17 +139,40 @@ AddBlacklistButton_Remove_User = panel.AddElement(panel,"Button")
             end
         end)
     end
+    AddBlacklistButton_Remove_User.SameLine = true
+panel.AddElement(panel,"HorizontalSeparator")
+getDiscord = panel.AddElement(panel,"Button")
+getDiscord.Label = "Get discord invite"
+getDiscord.OnClick = function()
+    setclipboard("https://discord.gg/bW5hsWa")
+    getDiscord.Label = "Copied invite into clipboard"
+    wait(3)
+    getDiscord.Label = "Get discord invite"
+end
 -- Custom message window
 if not __IS_TESTING then
     custom = Window.new("Custom messages of bible bot")
 else
     custom = Window.new("Custom messages of bible bot " .. math.random(9) .. math.random(9) .. math.random(9))
 end
+customDescTitle = custom.AddElement(custom,"Label")
+customDescTitle.Text = "Information about custom messages: "
 customDesc = custom.AddElement(custom,"Label")
-    customDesc.Text = "      Add new message that bible bot will says in the following situation:       \n- When a player join the game(welcome message)\n- An answer to a conffesion\n- An answer to a player pray\n- The bot self advertisment\n\nYou can share your custom messages by sharing the file\n'bible_bot_custom_message.json' with others people."
-
---
-
+    customDesc.Text = "      Add new message that bible bot will says in the following situation:       \n- When a player join the game(welcome message)\n- An answer to a conffesion\n- An answer to a player pray\n- The bot self advertisment\n\nYou can share your custom messages by sharing the file\n'bible_bot_custom_message.json' with others people or by sharing it.\nGet others message packs by sharing it on biblebot discord"
+-- get discord btn
+getDiscord = custom.AddElement(custom,"Button")
+getDiscord.Label = "Get bible discord invite"
+getDiscord.OnClick = function()
+    setclipboard("https://discord.gg/bW5hsWa")
+    getDiscord.Label = "Copied invite into clipboard"
+    wait(3)
+    getDiscord.Label = "Get discord invite"
+end
+-- hide desc checkbox
+hideDesc = custom.AddElement(custom,"Checkbox")
+hideDesc.SameLine = true
+hideDesc.State = settingConfig.isHidingCustomMessageDesc
+hideDesc.Label = "Hide the description of the windows"
 --
 endpoint = "http://labs.bible.org/api/?passage=random&type=json"
 getVerse = function()
@@ -149,7 +182,7 @@ getVerse = function()
 end
 local t = tick()
 chat = function(content)
-    if not settingConfig.isBibleBotEnabled then return end
+    if not settingConfig.isBibleBotDisabled then return end
     if tick() - t < 0.70 then
         wait(1)
     end
@@ -315,10 +348,17 @@ coroutine.resume(coroutine.create(function()
         updateSettingConfig()
     end
 end))
--- update isBibleBotEnabled config
+-- update isBibleBotDisabled config
 coroutine.resume(coroutine.create(function()
     while wait() do
-        settingConfig.isBibleBotEnabled = isBibleBotEnabled.State
+        settingConfig.isBibleBotDisabled = isBibleBotDisabled.State
+        updateSettingConfig()
+    end
+end))
+-- show
+coroutine.resume(coroutine.create(function()
+    while wait() do
+        settingConfig.isHidingCustomMessageDesc = hideDesc.State
         updateSettingConfig()
     end
 end))
