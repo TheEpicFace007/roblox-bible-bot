@@ -13,6 +13,7 @@ __DEFAULT_SETTING_CONFIG = {
     delayPreset = 1;
     doNotWelcome = false;
     isNotDoingAd = false;
+    isBibleBotEnabled = true;
     blacklisted = {};
 }
 
@@ -94,6 +95,9 @@ isNotDoingAd = panel.AddElement(panel,"Checkbox")
 isGreeter = panel.AddElement(panel,"Checkbox")
     isGreeter.State = settingConfig.doNotWelcome
     isGreeter.Label = "Disable biblebot greeting"
+-- enable bible bot tick
+isBibleBotEnabled = panel.AddElement(panel,"Checkbox")
+    isBibleBotEnabled.State = settingConfig.isBibleBotEnabled
 -- add blacklisted user to using the bot
 panel.AddElement(panel,"HorizontalSeparator")
 blacklisted = panel.AddElement(panel,"List")
@@ -125,14 +129,14 @@ AddBlacklistButton_Remove_User = panel.AddElement(panel,"Button")
             end
         end)
     end
--- Custom message
+-- Custom message window
 if not __IS_TESTING then
     custom = Window.new("Custom messages of bible bot")
 else
     custom = Window.new("Custom messages of bible bot " .. math.random(9) .. math.random(9) .. math.random(9))
 end
 customDesc = custom.AddElement(custom,"Label")
-    customDesc.Text = "Add new message that bible bot will says in the following situation:\n- When a player join the game(welcome message)\n- An answer to a conffesion\n- An answer to a player pray\nAn bot advertisment"
+    customDesc.Text = "      Add new message that bible bot will says in the following situation:       \n- When a player join the game(welcome message)\n- An answer to a conffesion\n- An answer to a player pray\n- The bot self advertisment\n\nYou can share your custom messages by sharing the file\n'bible_bot_custom_message.json' with others people."
 
 --
 
@@ -145,6 +149,7 @@ getVerse = function()
 end
 local t = tick()
 chat = function(content)
+    if not settingConfig.isBibleBotEnabled then return end
     if tick() - t < 0.70 then
         wait(1)
     end
@@ -196,7 +201,7 @@ commands.pray = function(Player,message)
 end
 
 onPlayerChat = function(chat_type,recipient,message)
-    for i,v in next,blacklist do if v == recipient.Name then return  end end
+    for i,v in next,settingConfig.blacklisted do if v == recipient.Name then return  end end
     message = string.lower(message)
     chat_type = nil
     if message:match(".*!ask.-god.*") then
@@ -296,7 +301,7 @@ coroutine.resume(coroutine.create(function()
         updateSettingConfig()
     end
 end))
--- update advertisment corutine
+-- update advertisment config corutine
 coroutine.resume(coroutine.create(function()
     while wait() do
         settingConfig.doNotWelcome = isGreeter.State
@@ -307,5 +312,13 @@ end))
 coroutine.resume(coroutine.create(function()
     while wait() do
         settingConfig.adDelay = adDelay.Value
+        updateSettingConfig()
+    end
+end))
+-- update isBibleBotEnabled config
+coroutine.resume(coroutine.create(function()
+    while wait() do
+        settingConfig.isBibleBotEnabled = isBibleBotEnabled.State
+        updateSettingConfig()
     end
 end))
