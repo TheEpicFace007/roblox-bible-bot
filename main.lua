@@ -286,6 +286,6 @@ end))
 -- ad delay config coroutine
 coroutine.resume(coroutine.create(function()
     while wait() do
-        config.adDelay
+        config.adDelay = adDelay.Value
     end
 end))
