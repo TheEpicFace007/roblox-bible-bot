@@ -1,8 +1,8 @@
 # What I want to do in the new update:
 
 - Saving the setting for the following settings:
-    * Ad timer []
-    * Time preset []
+    * Ad delay []
+    * Delay preset []
     * Greeter setting []
     * If it's doing ad or not []
     * The blacklisted users []
@@ -12,4 +12,3 @@
     * Conffesion answer []
     * Pray answer []
     * bot advertisment []
-    
