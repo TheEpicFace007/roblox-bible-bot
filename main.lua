@@ -17,7 +17,7 @@ if not pcall(readfile,"bible_bot_config.json") then
     writefile("bible_bot_config.json",HttpService:JSONEncode(__DEFAULTCONFIG))
 end
 config = HttpService:JSONDecode(readfile("bible_bot_config.json"))
-setclipboard( repr( config ) )
+updateConfig = function() writefile("bible_bot_config.json",HttpService:JSONEncode(config)) end
 -- bible bot window lib
 panel =  Window.new("Bible bot configuration panel")
 -- Advertisment timer label
@@ -27,12 +27,12 @@ adLabel.Text = "Adverisment configuration"
 adDelay = panel.AddElement(panel,"IntSlider")
 adDelay.Min   = 15
 adDelay.Max   = 900
-adDelay.Value = 30
+adDelay.Value = config.adDelay
 adDelay.Label = "Delay within each advertisment"
 -- ad timer preset
 delayPreset           = panel.AddElement(panel,"Dropdown")
 delayPreset.Label     = "Time preset for the delay within each ad"
-delayPreset.Selected  = 0
+delayPreset.Selected  = config.delayPreset
 delayPreset.Options   = {"30 Seconds";"1 minute ";"2 minute and 30 seconds";"5 minutes";"10 minutes";"15 minutes"}
 -- apply ad timer preset
 applyPreset = panel.AddElement(panel,"Button")
@@ -40,18 +40,24 @@ applyPreset.Label = "Apply ad timer preset"
 applyPreset.OnClick = function()
     if delayPreset.Selected     ==  0  then
         adDelay.Value = 30
+        config.adDelay = 30
     elseif delayPreset.Selected ==  1  then
         adDelay.Value = 60
+        config.adDelay = 60
     elseif delayPreset.Selected ==  2  then
         adDelay.Value = 138
+        config.adDelay = 138
     elseif delayPreset.Selected ==  3  then
         adDelay.Value = 300
+        config.adDelay = 300
     elseif delayPreset.Selected ==  4  then
         adDelay.Value = 600
+        config.adDelay = 600
     elseif delayPreset.Selected ==  5 then
         adDelay.Value = 900
+        config.adDelay = 900
     end
-
+    updateConfig()
 end
 -- horizontal separator
 panel.AddElement(panel,"HorizontalSeparator")
