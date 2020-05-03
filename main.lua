@@ -1,13 +1,19 @@
-math.randomseed(tick()) -- math.randomseed is used to get a true random for the answers so it wont be always be the same
+-- it allow me to generatom infinite window 0that have the "same" name
+-- it's for testing purpose, do not touch if you arent developping the scrip
+-- it's meant for protosmasher widnow lib that authorize you to only have 1 window
+-- that have the same name
+local __ISTESTING = true
+-- math.randomseed is used to get a true random for the answers so the answer wont be always be the same
+math.randomseed(tick())
 local HttpService = game:GetService "HttpService"
 local Players = game:GetService("Players")
 -- config
 __DEFAULTCONFIG = {
     adDelay = 30;
     delayPreset = 1;
-    isGreeterUsed = true;
-    isDoingAd = true;
-    blacklistedList = {};
+    doNotWelcome = false;
+    isNotDoingAd = false;
+    blacklisted = {};
     CustommWelcomeMessage = {};
     CustomPrayAnswer = {};
     CustomConffesionAnswer = {};
@@ -19,7 +25,11 @@ end
 config = HttpService:JSONDecode(readfile("bible_bot_config.json"))
 updateConfig = function() writefile("bible_bot_config.json",HttpService:JSONEncode(config)) end
 -- bible bot window lib
-panel =  Window.new("Bible bot configuration panel")
+if not __ISTESTING then
+    panel =  Window.new("Bible bot configuration panel")
+else
+    panel =  Window.new("Bible bot configuration panel " .. math.random(9) .. math.random(9) .. math.random(9))
+end
 -- Advertisment timer label
 adLabel = panel.AddElement(panel,"Label")
 adLabel.Text = "Adverisment configuration"
@@ -66,19 +76,18 @@ option = panel.AddElement(panel,"Label")
 option.Text = "Enable or disable biblebot feature"
 -- is not doing ad checkbox
 isNotDoingAd = panel.AddElement(panel,"Checkbox")
-isNotDoingAd.State = false
+isNotDoingAd.State = config.isNotDoingAd
 isNotDoingAd.Label = "Disable biblebot advertisement"
 -- is not doing greeting checkbox
 isGreeter = panel.AddElement(panel,"Checkbox")
-isGreeter.State = false
+isGreeter.State = config.doNotWelcome
 isGreeter.Label = "Disable biblebot greeting"
 -- add blacklisted user to using the bot
 panel.AddElement(panel,"HorizontalSeparator")
-blacklist = {}
-blacklistedList = panel.AddElement(panel,"List")
-    blacklistedList.Label = "Blacklisted people from using bible bot"
-    blacklistedList.Items = blacklist
-    blacklistedList.ItemsToShow = 5
+blacklisted = panel.AddElement(panel,"List")
+    blacklisted.Label = "Blacklisted people from using bible bot"
+    blacklisted.Items = config.blacklistedUser
+    blacklisted.ItemsToShow = 3
 
 AddBlacklistTextbox = panel.AddElement(panel,"TextInput")
     AddBlacklistTextbox.Label = "Add a user to be blacklisted from using bible bot commands"
@@ -87,39 +96,25 @@ AddBlacklistTextbox = panel.AddElement(panel,"TextInput")
 AddBlacklistButton_Add_User = panel.AddElement(panel,"Button")
     AddBlacklistButton_Add_User.Label = "Blacklist user"
     AddBlacklistButton_Add_User.OnClick = function()
-        table.insert(blacklist,AddBlacklistTextbox.Value)
-        blacklistedList.Items = blacklist
+        table.insert(config.blacklistedUser,AddBlacklistTextbox.Value)
+        blacklisted.Items = config.blacklistedUser
+        updateConfig()
     end
 
 AddBlacklistButton_Remove_User = panel.AddElement(panel,"Button")
-    AddBlacklistButton_Remove_User.Label = "Unblacklist user"
+    AddBlacklistButton_Remove_User.Label = "Remmove someone from the blacklist"
     AddBlacklistButton_Remove_User.OnClick = function()
         pcall(function()
-            local ans = ask_prompt("Removal of blacklist","Are you sure you want to remove the blacklist of " .. blacklistedList.Items[blacklistedList.Selected + 1],"Yes","No")
+            local ans = ask_prompt("Are you sure you want to give back " .. blacklisted.Items[blacklisted.Selected + 1] .. " the right to use bible bot?","Yes","No")
             if ans == 1 then
-                table.remove(blacklist,blacklistedList.Selected + 1)
-                blacklistedList.Items = blacklist
+                table.remove(config.blacklistedUser,blacklisted.Selected + 1)
+                blacklisted.Items = config.blacklistedUser
+                updateConfig()
             end
         end)
     end
 
 --
-local is_agaisnt_furry = true
-is_furry = function(Player)
-    if not is_agaisnt_furry then return false end
-    local furry_hat = {"rbxassetid://3908012443";"rbxassetid//188699722"}
-    for _,v in pairs(Player.Character:GetChildren()) do
-        if v.ClassName == "Accessory" then
-            pcall(function()
-                if v.Handle.SpecialMesh.MeshId == furry_hat[1] or furry_hat[2] then
-                    return true
-                else
-                    return false
-                end
-            end)
-        end
-    end
-end
 endpoint = "http://labs.bible.org/api/?passage=random&type=json"
 getVerse = function()
     local response = HttpService:JSONDecode(game:HttpGet(endpoint))
@@ -279,6 +274,14 @@ coroutine.resume(coroutine.create(function()
         elseif isNotDoingAd.State == true then
             isNotDoingAd.Label = "Enable bible bot advertisment"
         end
+    end
+end))
+
+-- update advertisement config coroutine
+coroutine.resume(coroutine.create(function()
+    while wait() do
+        config.isNotDoingAd = isNotDoingAd.State
+        updateConfig()
     end
 end))
 -- greeter text
