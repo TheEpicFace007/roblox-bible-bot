@@ -327,38 +327,14 @@ coroutine.resume(coroutine.create(function()
     end
 end))
 
--- update advertisement config coroutine
+-- update config coroutine
 coroutine.resume(coroutine.create(function()
     while wait(__TIME_WITHIN_EACH__CONFIG_SAVE) do
         settingConfig.isNotDoingAd = isNotDoingAd.State
-        updateSettingConfig()
-    end
-end))
--- update advertisment config corutine
-coroutine.resume(coroutine.create(function()
-    while wait(__TIME_WITHIN_EACH__CONFIG_SAVE) do
         settingConfig.doNotWelcome = isGreeter.State
-        updateSettingConfig()
-    end
-end))
--- ad delay config coroutine
-coroutine.resume(coroutine.create(function()
-    while wait(__TIME_WITHIN_EACH__CONFIG_SAVE) do
         settingConfig.adDelay = adDelay.Value
-        updateSettingConfig()
-    end
-end))
--- update isBibleBotDisabled config
-coroutine.resume(coroutine.create(function()
-    while wait() do
         settingConfig.isBibleBotDisabled = isBibleBotDisabled.State
-        updateSettingConfig(__TIME_WITHIN_EACH__CONFIG_SAVE)
-    end
-end))
--- show
-coroutine.resume(coroutine.create(function()
-    while wait() do
         settingConfig.isHidingCustomMessageDesc = hideDesc.State
-        updateSettingConfig(__TIME_WITHIN_EACH__CONFIG_SAVE)
+        updateSettingConfig()
     end
 end))
