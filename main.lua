@@ -32,18 +32,18 @@ else
 end
 -- Advertisment timer label
 adLabel = panel.AddElement(panel,"Label")
-adLabel.Text = "Adverisment configuration"
+    adLabel.Text = "Adverisment configuration"
 -- ad_timer
 adDelay = panel.AddElement(panel,"IntSlider")
-adDelay.Min   = 15
-adDelay.Max   = 900
-adDelay.Value = config.adDelay
-adDelay.Label = "Delay within each advertisment"
+    adDelay.Min   = 15
+    adDelay.Max   = 900
+    adDelay.Value = config.adDelay
+    adDelay.Label = "Delay within each advertisment"
 -- ad timer preset
 delayPreset           = panel.AddElement(panel,"Dropdown")
-delayPreset.Label     = "Time preset for the delay within each ad"
-delayPreset.Selected  = config.delayPreset
-delayPreset.Options   = {"30 Seconds";"1 minute ";"2 minute and 30 seconds";"5 minutes";"10 minutes";"15 minutes"}
+    delayPreset.Label     = "Time preset for the delay within each ad"
+    delayPreset.Selected  = config.delayPreset
+    delayPreset.Options   = {"30 Seconds";"1 minute ";"2 minute and 30 seconds";"5 minutes";"10 minutes";"15 minutes"}
 -- apply ad timer preset
 applyPreset = panel.AddElement(panel,"Button")
 applyPreset.Label = "Apply ad timer preset"
@@ -74,15 +74,15 @@ end
 panel.AddElement(panel,"HorizontalSeparator")
 -- option
 option = panel.AddElement(panel,"Label")
-option.Text = "Enable or disable biblebot feature"
+    option.Text = "Enable or disable biblebot feature"
 -- is not doing ad checkbox
 isNotDoingAd = panel.AddElement(panel,"Checkbox")
-isNotDoingAd.State = config.isNotDoingAd
-isNotDoingAd.Label = "Disable biblebot advertisement"
+    isNotDoingAd.Label = "Disable biblebot advertisement"
+    isNotDoingAd.State = config.isNotDoingAd
 -- is not doing greeting checkbox
 isGreeter = panel.AddElement(panel,"Checkbox")
-isGreeter.State = config.doNotWelcome
-isGreeter.Label = "Disable biblebot greeting"
+    isGreeter.State = config.doNotWelcome
+    isGreeter.Label = "Disable biblebot greeting"
 -- add blacklisted user to using the bot
 panel.AddElement(panel,"HorizontalSeparator")
 blacklisted = panel.AddElement(panel,"List")
