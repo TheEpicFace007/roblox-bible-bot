@@ -4,12 +4,20 @@ local Players = game:GetService("Players")
 -- config
 __DEFAULTCONFIG = {
     adDelay = 30;
+    delayPreset = 1;
+    isGreeterUsed = true;
+    isDoingAd = true;
+    blacklistedList = {};
+    CustommWelcomeMessage = {};
+    CustomPrayAnswer = {};
+    CustomConffesionAnswer = {};
+    CustomBotAdvertisment = {}
 }
 if not pcall(readfile,"bible_bot_config.json") then
-    writefile("bible_bot_config.json","")
+    writefile("bible_bot_config.json",HttpService:JSONEncode(__DEFAULTCONFIG))
 end
 config = HttpService:JSONDecode(readfile("bible_bot_config.json"))
-
+setclipboard( repr( config ) )
 -- bible bot window lib
 panel =  Window.new("Bible bot configuration panel")
 -- Advertisment timer label
