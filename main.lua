@@ -50,21 +50,27 @@ applyPreset.Label = "Apply ad timer preset"
 applyPreset.OnClick = function()
     if delayPreset.Selected     ==  0  then
         adDelay.Value = 30
+        config.delayPreset = 0
         config.adDelay = 30
     elseif delayPreset.Selected ==  1  then
         adDelay.Value = 60
+        config.delayPreset = 1
         config.adDelay = 60
     elseif delayPreset.Selected ==  2  then
         adDelay.Value = 138
+        config.delayPreset = 2
         config.adDelay = 138
     elseif delayPreset.Selected ==  3  then
         adDelay.Value = 300
+        config.delayPreset = 3
         config.adDelay = 300
     elseif delayPreset.Selected ==  4  then
         adDelay.Value = 600
+        config.delayPreset = 4
         config.adDelay = 600
     elseif delayPreset.Selected ==  5 then
         adDelay.Value = 900
+        config.delayPreset = 5
         config.adDelay = 900
     end
     updateConfig()
@@ -86,7 +92,7 @@ isGreeter.Label = "Disable biblebot greeting"
 panel.AddElement(panel,"HorizontalSeparator")
 blacklisted = panel.AddElement(panel,"List")
     blacklisted.Label = "Blacklisted people from using bible bot"
-    blacklisted.Items = config.blacklistedUser
+    blacklisted.Items = config.blacklisted
     blacklisted.ItemsToShow = 3
 
 AddBlacklistTextbox = panel.AddElement(panel,"TextInput")
@@ -96,8 +102,8 @@ AddBlacklistTextbox = panel.AddElement(panel,"TextInput")
 AddBlacklistButton_Add_User = panel.AddElement(panel,"Button")
     AddBlacklistButton_Add_User.Label = "Blacklist user"
     AddBlacklistButton_Add_User.OnClick = function()
-        table.insert(config.blacklistedUser,AddBlacklistTextbox.Value)
-        blacklisted.Items = config.blacklistedUser
+        table.insert(config.blacklisted,AddBlacklistTextbox.Value)
+        blacklisted.Items = config.blacklisted
         updateConfig()
     end
 
@@ -107,13 +113,12 @@ AddBlacklistButton_Remove_User = panel.AddElement(panel,"Button")
         pcall(function()
             local ans = ask_prompt("Are you sure you want to give back " .. blacklisted.Items[blacklisted.Selected + 1] .. " the right to use bible bot?","Yes","No")
             if ans == 1 then
-                table.remove(config.blacklistedUser,blacklisted.Selected + 1)
-                blacklisted.Items = config.blacklistedUser
+                table.remove(config.blacklisted,blacklisted.Selected + 1)
+                blacklisted.Items = config.blacklisted
                 updateConfig()
             end
         end)
     end
-
 --
 endpoint = "http://labs.bible.org/api/?passage=random&type=json"
 getVerse = function()
@@ -123,7 +128,7 @@ getVerse = function()
 end
 local t = tick()
 chat = function(content)
-    if t - tick() < 0.70 then
+    if tick() - t < 0.70 then
         wait(1)
     end
     game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(content, "All")
@@ -267,16 +272,6 @@ coroutine.resume(coroutine.create(function()
     end
 end))
 
-coroutine.resume(coroutine.create(function()
-    while wait() do
-        if isNotDoingAd.State == false then
-            isNotDoingAd.Label = "Disable bible bot advertisment"
-        elseif isNotDoingAd.State == true then
-            isNotDoingAd.Label = "Enable bible bot advertisment"
-        end
-    end
-end))
-
 -- update advertisement config coroutine
 coroutine.resume(coroutine.create(function()
     while wait() do
@@ -284,11 +279,10 @@ coroutine.resume(coroutine.create(function()
         updateConfig()
     end
 end))
--- greeter text
+-- update advertisment corutine
 coroutine.resume(coroutine.create(function()
-        if isGreeter.State == true then
-            isGreeter.Label = "Enable biblebot greeting"
-        elseif isGreeter.State == false then
-            isGreeter.Label = "Disable biblebot greeting"
-        end
+    while wait() do
+        config.doNotWelcome = isGreeter.State
+        updateConfig()
+    end
 end))
