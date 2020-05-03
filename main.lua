@@ -116,9 +116,9 @@ AddBlacklistTextbox = panel.AddElement(panel,"TextInput")
 AddBlacklistButton_Add_User = panel.AddElement(panel,"Button")
     AddBlacklistButton_Add_User.Label = "Blacklist user"
     AddBlacklistButton_Add_User.OnClick = function()
-        if AddBlacklistTextbox.Value == "" then
+        if AddBlacklistTextbox.Value:match("%s+") then
             AddBlacklistButton_Add_User.Label = "ERROR: Nothing is entered - enter a username"
-            wait(2)
+            wait(3)
             AddBlacklistButton_Add_User.Label = "Blacklist user"
             return
         end
@@ -146,7 +146,7 @@ getDiscord.Label = "Get discord invite"
 getDiscord.OnClick = function()
     setclipboard("https://discord.gg/bW5hsWa")
     getDiscord.Label = "Copied invite into clipboard"
-    wait(3)
+    wait(2)
     getDiscord.Label = "Get discord invite"
 end
 -- Custom message window
@@ -165,7 +165,7 @@ getDiscord.Label = "Get bible discord invite"
 getDiscord.OnClick = function()
     setclipboard("https://discord.gg/bW5hsWa")
     getDiscord.Label = "Copied invite into clipboard"
-    wait(3)
+    wait(2)
     getDiscord.Label = "Get discord invite"
 end
 -- hide desc checkbox
