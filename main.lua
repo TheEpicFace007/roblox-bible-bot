@@ -2,9 +2,10 @@
 -- it's for testing purpose, do not touch if you arent developping the scrip
 -- it's meant for protosmasher widnow lib that authorize you to only have 1 window
 -- that have the same name
-local __IS_TESTING = true
 -- math.randomseed is used to get a true random for the answers so the answer wont be always be the same
 math.randomseed(tick())
+
+local __IS_TESTING = false
 local HttpService = game:GetService "HttpService"
 local Players = game:GetService("Players")
 -- config
@@ -19,10 +20,10 @@ __DEFAULT_SETTING_CONFIG = {
 }
 
 __DEFAULT_CUSTOM_MESSAGE = {
-    CustommWelcomeMessage = {};
-    CustomPrayAnswer = {};
-    CustomConffesionAnswer = {};
-    CustomBotAdvertisment = {}
+    WelcomeMessage = {};
+    PrayAnswer = {};
+    ConffesionAnswer = {};
+    BotAdvertisment = {}
 }
 if not pcall(readfile,"bible_bot_config.json") then
     writefile("bible_bot_config.json",HttpService:JSONEncode(__DEFAULT_SETTING_CONFIG))
@@ -158,7 +159,7 @@ end
 customDescTitle = custom.AddElement(custom,"Label")
 customDescTitle.Text = "Information about custom messages: "
 customDesc = custom.AddElement(custom,"Label")
-    customDesc.Text = "      Add new message that bible bot will says in the following situation:       \n- When a player join the game(welcome message)\n- An answer to a conffesion\n- An answer to a player pray\n- The bot self advertisment\n\nYou can share your custom messages by sharing the file\n'bible_bot_custom_message.json' with others people or by sharing it.\nGet others message packs by sharing it on biblebot discord"
+    customDesc.Text = "      Add new message that bible bot will chat in the following situation:       \n- When a player join the game(welcome message)\n- An answer to a conffesion\n- An answer to a player pray\n- The bot self advertisment\n\nYou can share your custom messages by sharing the file\n'bible_bot_custom_message.json' with others people \n Add 'HUMAN' in a sentence to chat the player name that is calling the sentence in the message\nGet others message packs and share your by sharing it on biblebot discord"
 -- get discord btn
 getDiscord = custom.AddElement(custom,"Button")
 getDiscord.Label = "Get bible discord invite"
@@ -173,6 +174,13 @@ hideDesc = custom.AddElement(custom,"Checkbox")
 hideDesc.SameLine = true
 hideDesc.State = settingConfig.isHidingCustomMessageDesc
 hideDesc.Label = "Hide the description of the windows"
+-- separator
+custom.AddElement(custom,"HorizontalSeparator")
+-- add message to the custom welcome msg
+CustomWelcomeMessageLabel = custom.AddElement(custom,"Label")
+CustomWelcomeMessageLabel.Text = "Custom welcome messages"
+CustomWelcomeMessageList = custom.AddElement(custom,"List")
+CustomWelcomeMessageList.Items = customMessageConfig.WelcomeMessage
 --
 endpoint = "http://labs.bible.org/api/?passage=random&type=json"
 getVerse = function()
@@ -323,6 +331,21 @@ coroutine.resume(coroutine.create(function()
         if isNotDoingAd.State == false then
             chat(ad[math.random(#ad)])
             wait(adDelay.Value)
+        end
+    end
+end))
+
+-- hide desc coroutine
+coroutine.resume(coroutine.create(function()
+    while wait() do
+        if hideDesc.State then
+            customDesc.Text = ""
+            customDescTitle.Text = ""
+            hideDesc.Label = "Hide the description of the windows"
+        else
+            customDesc.Text = "      Add new message that bible bot will says in the following situation:       \n- When a player join the game(welcome message)\n- An answer to a conffesion\n- An answer to a player pray\n- The bot self advertisment\n\nYou can share your custom messages by sharing the file\n'bible_bot_custom_message.json' with others people \nGet others message packs and share your by sharing it on biblebot discord"
+            customDescTitle.Text = "Information about custom messages: "
+            hideDesc.Label = "Show the description of the windows"
         end
     end
 end))
