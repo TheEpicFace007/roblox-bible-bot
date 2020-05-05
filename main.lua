@@ -214,30 +214,30 @@ end
 
 commands.askgod = function()
     local ans = {
-        "Yes"; "No"; "It is best for you not to know"; "Your question is beyond your mortal comprehension"; "Blasphemy! ask no more."; "I am ashamed of you";
-        "You should be ashamed of what you are asking"; "Perhaps"; "No opinion"; "No comment"; "This is not a question befit for me, ask another"; "Reask that question, it makes no sense";
-        "A pity, made in my image yet couldn't ask a more reasonable question for me";"Such foul words, i am ashamed of creating you";"Think twice of what you ask me";
-        "What you are asking is blasphemy!";"You exist to suffer, no further comment.";"I didn't set fire to Sodom and Gommorah for you to ask such a lewd question!";"Your question is why Judgement Day will come for us sooner then before.";
+        "Yes"; "No"; "It is best for you not to know"; "Your question is beyond your mortal comprehension"; "Blasphemy! ask no more."; "I do not care to entertain your trivial question";
+        "You should be ashamed of what you are asking"; "Perhaps"; "I have nothing to say about it"; "I refuse to answer that"; "This is not a question befit for me, ask another"; "Reask that question, it makes no sense";
+        "A pity, made in my image yet couldn't ask a more reasonable question for me";"Such foul words, i am ashamed of creating you";"Think twice of what you ask of me";
+        "What you are asking me is blasphemy! confess your sin to me or face eternal torment";"You exist to suffer, no further comment.";"I didn't set fire to Gommorah for you to ask such a foolish question!";"Your question is why Judgement Day will come for us sooner then before.";"This question is beneath me, ask another!";
     }
     chat(ans[math.random(#ans)])
 end
 
 commands.help = function()
-    chat("!ask god [question] - Ask your lord a question | !verse - Study the holy bible | !help - Show this help menu | !confess [sin], confess something to god | !pray [prayer] pray for something")
+    chat("!ask god [question] - Ask God a question | !verse - Study the holy bible | !help - Show this help menu | !confess [sin], confess your actions to God | !pray [prayer] pray for something")
     wait(0.5)
 end
 
 commands.confesion = function(Player,message)
 
-   local ans = {"Your sin has been forgiven.";"I am overjoyed you have acknowledged your sin, God shall forgive you.";"Suffering awaits you, for your actions have made you irredeemable";"i see your sin weighs heavily on you, God has forgiven you!";"This is a sin that can not be easily forgiven, i demand you say Glory To God 20 times!";"Your sin mocks the commandments put forth by God, 20 Holy Mary's!";
+   local ans = {"Your sin has been forgiven, rejoice!";"I am overjoyed you have acknowledged your sin, God shall forgive you.";"You are forgiven, be glad Jesus died for your sake.";"I can see your sin weighs heavily on you, God has forgiven you!";"This is a sin that can not be easily forgiven, i demand you say Glory To God 20 times!";"Your sin mocks the commandments put forth by God, 20 Holy Mary's!";
                  "Your blasphemy ends here, pray Our Father and Holy Mary 30 times each right now!";"Your actions disgust our Lord";"Satan, smite " .. Player.Name ..
-                " down " .. Player.Name .. " has defied God, the Eternal Creator himself."};
+                " down for " .. Player.Name .. " has dared to defy God himself."};
     chat(ans[math.random(#ans)])
 end
 
 commands.pray = function(Player,message)
 
-   local possibleAns = {"Amen";"Ask, and you shall recieve";"Your prayers have been answered!";"Your prayer has been rejected for blasphemy!";"I understand, it shall be done";"What you ask will be done";"Your prayer will be granted, in time."}
+   local possibleAns = {"Amen";"Your greed disgusts me, confess your sin so that i may judge you by typing !confess [describe your foul actions here]";"Your prayer will be answered, Hallelujuh!";"Your prayer has been rejected for blasphemy! type !confess [your sin here] for judgement.";"I understand your feelings, it shall be done soon";"What you ask will be done, be patient my son";"Your prayer will be granted, in time."}
     chat(possibleAns[math.random(#possibleAns)])
 end
 
@@ -262,11 +262,11 @@ Players.PlayerChatted:Connect(onPlayerChat)
 
 Players.PlayerAdded:Connect(function(NewPlayer)
     local welcomeSentence = {
-        "Hello soon-to-be christian, study the bible by chatting !verse";
-        "Welcome " .. NewPlayer.Name .. "! May you study the bible with upmost vigor by chatting !verse";
-        "Welcome to the holiest place on roblox " .. NewPlayer.Name .. ". Study the bible by chatting !verse";
+        "Greetings " .. NewPlayer.Name .. ", study the bible to further your blossoming faith by chatting !verse";
+        "Welcome " .. NewPlayer.Name .. "! to Bibleblox! study the bible with upmost vigor by chatting !verse";
+        "Welcome to the holiest place on roblox " .. NewPlayer.Name .. ". Study the bible as soon as possible by chatting !verse";
         "Feel free to ask any question to God by chatting !ask god [question]";
-        "Welcome Christ warrior to the most christian place on roblox " .. NewPlayer.Name;
+        "Welcome to the most christian place on roblox " .. NewPlayer.Name;
         function()
             if os.date("*t").hour > 12 and os.date("*t").hour < 18 then
                 return "Welcome " .. NewPlayer.Name .. " to the afternoon bible study session. Open your bible by chatting !verse"
@@ -310,12 +310,12 @@ Players.PlayerAdded:Connect(function(NewPlayer)
 end)
 
 ad = {
-    "Hi, I am bible bot, I help the masses to realize the true faith. Chat !help to know the available commands";
-    "I have come forth to bring the good news. Chat !help to know the available commands";
+    "Greetings all, I am bible bot, I guide the masses towards realizing the true faith. Chat !help to know all the available commands for me";
+    "I have come forth to bring the good news to all! Chat !verse to hear of it";
     "Do not commit sin or suffer for eternity in hell! Chat !help to know the availaible commands for bible bot";
-    "Remember to pray to God. Chat !help to know the commands";
-    "Study the bible by chatting !verse to study a verse of the bible, Chat !help to know other commands";
-    "Chat !help to know all the availaible commands of bible bot"
+    "Always remember to pray to God. Chat !pray [someone or something you want] to learn what He has in store for your prayer";
+    "Remember to study the bible to further your love for God. type !verse to study a verse of the bible, Chat !help to know other commands";
+    "Submit to the divine authority of God and learn more of the one true faith by typing !help to know all the availaible commands of bible bot"
 }
 oldAdTimerValue = adDelay.Value
 oldState = isNotDoingAd.State
