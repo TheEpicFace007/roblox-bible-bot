@@ -217,7 +217,7 @@ commands.askgod = function()
         "Yes"; "No"; "It is best for you not to know"; "Your question is beyond your mortal comprehension"; "Blasphemy! ask no more."; "I am ashamed of you";
         "You should be ashamed of what you are asking"; "Perhaps"; "No opinion"; "No comment"; "This is not a question befit for me, ask another"; "Reask that question, it makes no sense";
         "A pity, made in my image yet couldn't ask a more reasonable question for me";"Such foul words, i am ashamed of creating you";"Think twice of what you ask me";
-        "What you are asking is blasphemy!";"You exist to suffer, no further comment.";"I didn't set fire to Sodom and Gommorah for you to ask such a lewd question!";"Your question is why Judgement Day will come for us sooner then before.";
+        "What you are asking is blasphemy!";"You exist to suffer, no further comment.";"I didn't set fire to Sod.om and Gommorah for you to ask such a foolish question!";"Your question is why Judgement Day will come for us sooner then before.";
     }
     chat(ans[math.random(#ans)])
 end
@@ -231,7 +231,7 @@ commands.confesion = function(Player,message)
 
    local ans = {"Your sin has been forgiven.";"I am overjoyed you have acknowledged your sin, God shall forgive you.";"Suffering awaits you, for your actions have made you irredeemable";"i see your sin weighs heavily on you, God has forgiven you!";"This is a sin that can not be easily forgiven, i demand you say Glory To God 20 times!";"Your sin mocks the commandments put forth by God, 20 Holy Mary's!";
                  "Your blasphemy ends here, pray Our Father and Holy Mary 30 times each right now!";"Your actions disgust our Lord";"Satan, smite " .. Player.Name ..
-                " down " .. Player.Name .. " has defied God, the Eternal Creator himself."};
+                " down for " .. Player.Name .. " has defied God, the Eternal Creator himself."};
     chat(ans[math.random(#ans)])
 end
 
