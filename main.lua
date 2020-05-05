@@ -3,9 +3,9 @@
 -- it's meant for protosmasher widnow lib that authorize you to only have 1 window
 -- that have the same name
 -- math.randomseed is used to get a true random for the answers so the answer wont be always be the same
-math.randomseed(tick())
+math.randomseed(math.random(100000,tick()))
 
-local __IS_TESTING = false
+local __IS_TESTING = true
 local HttpService = game:GetService "HttpService"
 local Players = game:GetService("Players")
 -- config
@@ -142,13 +142,13 @@ AddBlacklistButton_Remove_User = panel.AddElement(panel,"Button")
     end
     AddBlacklistButton_Remove_User.SameLine = true
 panel.AddElement(panel,"HorizontalSeparator")
-getDiscord = panel.AddElement(panel,"Button")
-getDiscord.Label = "Get discord invite"
-getDiscord.OnClick = function()
+getDiscord_1 = panel.AddElement(panel,"Button")
+getDiscord_1.Label = "Get discord invite"
+getDiscord_1.OnClick = function()
     setclipboard("https://discord.gg/bW5hsWa")
-    getDiscord.Label = "Copied invite into clipboard"
+    getDiscord_1.Label = "Copied invite into clipboard"
     wait(2)
-    getDiscord.Label = "Get discord invite"
+    getDiscord_1.Label = "Get discord invite"
 end
 -- Custom message window
 if not __IS_TESTING then
@@ -159,7 +159,7 @@ end
 customDescTitle = custom.AddElement(custom,"Label")
 customDescTitle.Text = "Information about custom messages: "
 customDesc = custom.AddElement(custom,"Label")
-    customDesc.Text = "      Add new message that bible bot will chat in the following situation:       \n- When a player join the game(welcome message)\n- An answer to a conffesion\n- An answer to a player pray\n- The bot self advertisment\n\nYou can share your custom messages by sharing the file\n'bible_bot_custom_message.json' with others people \n Add 'HUMAN' in a sentence to chat the player name that is calling the sentence in the message\nGet others message packs and share your by sharing it on biblebot discord"
+    customDesc.Text = "      Add new message that bible bot will chat in the following situation:       \n- When a player join the game(welcome message)\n- An answer to a conffesion\n- An answer to a player pray\n- The bot self advertisment\n\nYou can share your custom messages by sharing the file\n'bible_bot_custom_message.json'(located in the workspace folder of protosmasher) with others people \n Add 'HUMAN' in a sentence to mention the player name in  the sentence in the message\nGet others message packs and share your by sharing it on biblebot discord"
 -- get discord btn
 getDiscord = custom.AddElement(custom,"Button")
 getDiscord.Label = "Get bible discord invite"
@@ -171,16 +171,51 @@ getDiscord.OnClick = function()
 end
 -- hide desc checkbox
 hideDesc = custom.AddElement(custom,"Checkbox")
-hideDesc.SameLine = true
-hideDesc.State = settingConfig.isHidingCustomMessageDesc
-hideDesc.Label = "Hide the description of the windows"
+    hideDesc.SameLine = true
+    hideDesc.State = settingConfig.isHidingCustomMessageDesc
+    hideDesc.Label = "Hide the description of the windows"
 -- separator
 custom.AddElement(custom,"HorizontalSeparator")
 -- add message to the custom welcome msg
-CustomWelcomeMessageLabel = custom.AddElement(custom,"Label")
-CustomWelcomeMessageLabel.Text = "Custom welcome messages"
-CustomWelcomeMessageList = custom.AddElement(custom,"List")
-CustomWelcomeMessageList.Items = customMessageConfig.WelcomeMessage
+
+WelcomeLabel = custom.AddElement(custom,"Label")
+    WelcomeLabel.Text = "Custom welcome messages"
+
+WelcomeList = custom.AddElement(custom,"List")
+    WelcomeList.Items = customMessageConfig.WelcomeMessage
+    WelcomeList.ItemsToShow = 4
+
+ToAdd_Welcome = custom.AddElement(custom,"TextInput")
+    ToAdd_Welcome.Label = "Custom welcome message to add"
+    ToAdd_Welcome.MultiLine = false
+    ToAdd_Welcome.SameLine = false
+
+AddWelcomeMessage = custom.AddElement(custom,"Button")
+    AddWelcomeMessage.Label = "Add welcome message"
+    AddWelcomeMessage.SameLine = false
+    AddWelcomeMessage.OnClick = function ()
+        table.insert(customMessageConfig.WelcomeMessage,ToAdd_Welcome.Value)
+        ToAdd_Welcome.Label = "Added custom greeting"
+        WelcomeList.Items = customMessageConfig.WelcomeMessage
+        updateMessageConfig()
+        wait(2)
+        ToAdd_Welcome.Label = "Add custom greeting"
+    end
+
+RemoveWelcomeMessage = custom.AddElement(custom,"Button")
+    RemoveWelcomeMessage.Label = "Remove welcome message"
+    RemoveWelcomeMessage.SameLine = true
+    RemoveWelcomeMessage.OnClick = function ()
+        if ask_prompt("Deletion of custom message","Are you sure you want to delete the selected custom message? There will be no way of getting it back.","Yes","No") == 1 then
+            table.remove(customMessageConfig.WelcomeMessage,WelcomeList.Selected + 1)
+            WelcomeList.Items = customMessageConfig.WelcomeMessage
+            updateMessageConfig()
+            ToAdd_Welcome.Label = "Removed custom greeting"
+            wait(2)
+            ToAdd_Welcome.Label = "Remove custom greeting"
+        end
+    end
+
 --
 endpoint = "http://labs.bible.org/api/?passage=random&type=json"
 getVerse = function()
@@ -247,7 +282,7 @@ onPlayerChat = function(chat_type,recipient,message)
     chat_type = nil
     if message:match(".*!ask.-god.*") then
         commands:askgod()
-    elseif message:match(".*!verse.*") then
+    elseif message:match(".*!verse.*") or message:match(".!bible.*") then
         commands:verse()
     elseif message:match(".*!help.*") then
         commands:help()
@@ -295,6 +330,16 @@ Players.PlayerAdded:Connect(function(NewPlayer)
             end
         end;
     }
+    if #customMessageConfig.WelcomeMessage ~= 0 then
+        for i,message in pairs(customMessageConfig.WelcomeMessage) do
+            if string.find(message,"HUMAN") then
+                local messageRepl = string.gsub(message,"HUMAN",NewPlayer.Name)
+                table.insert(welcomeSentence,messageRepl)
+            else
+                table.insert(welcomeSentence,message)
+            end
+        end
+    end
     for cycle,sentence in next,welcomeSentence do
         if isGreeter.State == false then
             if cycle == math.random(#welcomeSentence) then
@@ -327,7 +372,6 @@ __TIME_WITHIN_EACH__CONFIG_SAVE = 0.1
 -- advertisement corutine
 coroutine.resume(coroutine.create(function()
     while wait() do
-
         if isNotDoingAd.State == false then
             chat(ad[math.random(#ad)])
             wait(adDelay.Value)
@@ -341,18 +385,18 @@ coroutine.resume(coroutine.create(function()
         if hideDesc.State then
             customDesc.Text = ""
             customDescTitle.Text = ""
-            hideDesc.Label = "Hide the description of the windows"
+            hideDesc.Label = "Show the description of the windows"
         else
             customDesc.Text = "      Add new message that bible bot will says in the following situation:       \n- When a player join the game(welcome message)\n- An answer to a conffesion\n- An answer to a player pray\n- The bot self advertisment\n\nYou can share your custom messages by sharing the file\n'bible_bot_custom_message.json' with others people \nGet others message packs and share your by sharing it on biblebot discord"
             customDescTitle.Text = "Information about custom messages: "
-            hideDesc.Label = "Show the description of the windows"
+            hideDesc.Label = "Hide the description of the windows"
         end
     end
 end))
 
 -- update config coroutine
 coroutine.resume(coroutine.create(function()
-    while wait(__TIME_WITHIN_EACH__CONFIG_SAVE) do
+    while wait(0.1) do
         settingConfig.isNotDoingAd = isNotDoingAd.State
         settingConfig.doNotWelcome = isGreeter.State
         settingConfig.adDelay = adDelay.Value
