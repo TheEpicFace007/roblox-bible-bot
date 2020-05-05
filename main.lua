@@ -223,7 +223,7 @@ commands.askgod = function()
 end
 
 commands.help = function()
-    chat("!ask god [question] - Ask your lord a question | !verse - Study the holy bible | !help - Show this help menu | !confess [sin], confess your foul actions to God for judgement | !pray [prayer] pray for something or someone")
+    chat("!ask god [question] - Ask God a question | !verse - Study the holy bible | !help - Show this help menu | !confess [sin], confess your actions to God | !pray [prayer] pray for something")
     wait(0.5)
 end
 
