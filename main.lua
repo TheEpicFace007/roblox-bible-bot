@@ -234,10 +234,24 @@ AddPray = custom.AddElement(custom,"Button")
         table.insert(customMessageConfig.PrayAnswer,To_Add_Pray.Value)
         updateMessageConfig()
         prayList.Items = customMessageConfig.PrayAnswer
+        AddPray.Label = "Added!"
+        wait(2)
+        AddPray.Label = "Add custom pray"
     end
-AddPray.SameLine = tue
+AddPray.SameLine = true
 RemovePray = custom.AddElement(custom,"Button")
-
+    RemovePray.Label = "Remove the selected custom pray"
+    RemovePray.OnClick = function()
+        if ask_prompt("Deletion of custom message","Are you sure you want to delete the selected custom message? There will be no way of getting it back.","Yes","No") == 1 then
+            table.remove(customMessageConfig.PrayAnswer,prayList.Selected+1)
+            prayList.Items = customMessageConfig.PrayAnswer
+            updateMessageConfig()
+            RemovePray.Label = "Removed!"
+            wait(2)
+            RemovePray.Label = "Remove the selected custom pray"
+        end
+    end
+    RemovePray.SameLine = true
 --
 endpoint = "http://labs.bible.org/api/?passage=random&type=json"
 getVerse = function()
