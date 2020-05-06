@@ -8,7 +8,7 @@
     * The blacklisted users [x]
 - Add custom welcome in a user friendly way and save on a file(the user can add greetings)
 - Add a way for the user to add custom thing of the following:
-    * Welcome message []
+    * Welcome message [x]
     * Conffesion answer []
-    * Pray answer []
+    * Pray answer [x]
     * bot advertisment []
