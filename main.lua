@@ -160,7 +160,7 @@ end
 customDescTitle = custom.AddElement(custom,"Label")
 customDescTitle.Text = "Information about custom messages: "
 customDesc = custom.AddElement(custom,"Label")
-    customDesc.Text = "You can add HUMAN into a sentence for a custom message to mention the user who's using the commands. Example:\nHello HUMAN. I hope you are doing well HUMAN.\nYou can share the custom messages by sharing the file `bible_bot_custom_message.json`(located in the workspace folder of protosmasher) with others. Get message packs by joining the discord."
+    customDesc.Text = "You can add HUMAN into a sentence for a custom message to mention the user who's using the commands. Example:\nHello HUMAN. I hope you are doing well HUMAN.\nYou can share the custom messages by sharing the file `bible_bot_custom_message.json`\n(located in the workspace folder of protosmasher) with others. Get message packs by joining the discord."
 -- get discord btn
 getDiscord = custom.AddElement(custom,"Button")
 getDiscord.Label = "Get bible discord invite"
@@ -219,7 +219,7 @@ RemoveWelcomeMessage = custom.AddElement(custom,"Button")
 custom.AddElement(custom,"HorizontalSeparator")
 prayList = custom.AddElement(custom,"List")
     prayList.Items = customMessageConfig.PrayAnswer
-    prayList.ItemToShow = 4
+    prayList.ItemsToShow = 4
     prayList.Label = "Custom answer to pray"
 To_Add_Pray = custom.AddElement(custom,"TextInput")
     To_Add_Pray.Label = "Custom pray answer to add"
@@ -252,7 +252,15 @@ RemovePray = custom.AddElement(custom,"Button")
         end
     end
     RemovePray.SameLine = true
+-- Conffesion
+custom.AddElement(custom,"HorizontalSeparator")
+confesionList = custom.AddElement(custom,"List")
+    confesionList.Items = customMessageConfig.ConffesionAnswer
+    confesionList.ItemsToShow = 4
+    confesionList.Label = "Custom message to add"
+    
 --
+
 endpoint = "http://labs.bible.org/api/?passage=random&type=json"
 getVerse = function()
     local response = HttpService:JSONDecode(game:HttpGet(endpoint))
