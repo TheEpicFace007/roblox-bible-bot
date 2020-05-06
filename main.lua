@@ -117,8 +117,8 @@ AddBlacklistTextbox = panel.AddElement(panel,"TextInput")
 AddBlacklistButton_Add_User = panel.AddElement(panel,"Button")
     AddBlacklistButton_Add_User.Label = "Blacklist user"
     AddBlacklistButton_Add_User.OnClick = function()
-        if AddBlacklistTextbox.Value:match("%s+") then
-            AddBlacklistButton_Add_User.Label = "ERROR: Nothing is entered - enter a username"
+        if AddBlacklistTextbox.Value == "" then
+            AddBlacklistButton_Add_User.Label = "Please enter a username"
             wait(3)
             AddBlacklistButton_Add_User.Label = "Blacklist user"
             return
@@ -126,6 +126,7 @@ AddBlacklistButton_Add_User = panel.AddElement(panel,"Button")
         table.insert(settingConfig.blacklisted,AddBlacklistTextbox.Value)
         blacklisted.Items = settingConfig.blacklisted
         updateSettingConfig()
+        AddBlacklistTextbox.Value = ""
     end
 
 AddBlacklistButton_Remove_User = panel.AddElement(panel,"Button")
@@ -159,7 +160,7 @@ end
 customDescTitle = custom.AddElement(custom,"Label")
 customDescTitle.Text = "Information about custom messages: "
 customDesc = custom.AddElement(custom,"Label")
-    customDesc.Text = "      Add new message that bible bot will chat in the following situation:       \n- When a player join the game(welcome message)\n- An answer to a conffesion\n- An answer to a player pray\n- The bot self advertisment\n\nYou can share your custom messages by sharing the file\n'bible_bot_custom_message.json'(located in the workspace folder of protosmasher) with others people \n Add 'HUMAN' in a sentence to mention the player name in  the sentence in the message\nGet others message packs and share your by sharing it on biblebot discord"
+    customDesc.Text = "You can add HUMAN into a sentence for a custom message to mention the user who's using the commands. Example:\nHello HUMAN. I hope you are doing well HUMAN.\nYou can share the custom messages by sharing the file `bible_bot_custom_message.json`(located in the workspace folder of protosmasher) with others."
 -- get discord btn
 getDiscord = custom.AddElement(custom,"Button")
 getDiscord.Label = "Get bible discord invite"
@@ -177,15 +178,12 @@ hideDesc = custom.AddElement(custom,"Checkbox")
 -- separator
 custom.AddElement(custom,"HorizontalSeparator")
 -- add message to the custom welcome msg
-
-WelcomeLabel = custom.AddElement(custom,"Label")
-    WelcomeLabel.Text = "Custom welcome messages"
-
 WelcomeList = custom.AddElement(custom,"List")
     WelcomeList.Items = customMessageConfig.WelcomeMessage
     WelcomeList.ItemsToShow = 4
+    WelcomeList.Label = "Custom welcome messages"
 
-ToAdd_Welcome = custom.AddElement(custom,"TextInput")
+    ToAdd_Welcome = custom.AddElement(custom,"TextInput")
     ToAdd_Welcome.Label = "Custom welcome message to add"
     ToAdd_Welcome.MultiLine = false
     ToAdd_Welcome.SameLine = false
@@ -194,12 +192,14 @@ AddWelcomeMessage = custom.AddElement(custom,"Button")
     AddWelcomeMessage.Label = "Add welcome message"
     AddWelcomeMessage.SameLine = false
     AddWelcomeMessage.OnClick = function ()
+        if ToAdd_Welcome.Value == "" then AddWelcomeMessage.Label = "Please enter something else than no message" wait(3) AddWelcomeMessage.Label = "Add welcome message" return end
         table.insert(customMessageConfig.WelcomeMessage,ToAdd_Welcome.Value)
         ToAdd_Welcome.Label = "Added custom greeting"
         WelcomeList.Items = customMessageConfig.WelcomeMessage
         updateMessageConfig()
         wait(2)
         ToAdd_Welcome.Label = "Add custom greeting"
+        ToAdd_Welcome.Value = ""
     end
 
 RemoveWelcomeMessage = custom.AddElement(custom,"Button")
@@ -226,8 +226,8 @@ end
 local t = tick()
 chat = function(content)
     if settingConfig.isBibleBotDisabled then return end
-    if tick() - t < 0.70 then
-        wait(1)
+    if tick() - t < 0.80 then
+        wait(2)
     end
     game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(content, "All")
     t = tick()
@@ -387,7 +387,7 @@ coroutine.resume(coroutine.create(function()
             customDescTitle.Text = ""
             hideDesc.Label = "Show the description of the windows"
         else
-            customDesc.Text = "      Add new message that bible bot will says in the following situation:       \n- When a player join the game(welcome message)\n- An answer to a conffesion\n- An answer to a player pray\n- The bot self advertisment\n\nYou can share your custom messages by sharing the file\n'bible_bot_custom_message.json' with others people \nGet others message packs and share your by sharing it on biblebot discord"
+            customDesc.Text = "You can add HUMAN into a sentence for a custom message to mention the user who's using the commands. Example:\nHello HUMAN. I hope you are doing well HUMAN.\nYou can share the custom messages by sharing the file `bible_bot_custom_message.json`(located in the workspace folder of protosmasher) with others."
             customDescTitle.Text = "Information about custom messages: "
             hideDesc.Label = "Hide the description of the windows"
         end
