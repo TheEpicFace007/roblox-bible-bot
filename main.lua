@@ -5,7 +5,7 @@
 -- math.randomseed is used to get a true random for the answers so the answer wont be always be the same
 math.randomseed(math.random(100000,tick()))
 
-local __IS_TESTING = true
+local __IS_TESTING = false
 local HttpService = game:GetService "HttpService"
 local Players = game:GetService("Players")
 -- config
@@ -217,10 +217,27 @@ RemoveWelcomeMessage = custom.AddElement(custom,"Button")
     end
 -- custom pray answer
 custom.AddElement(custom,"HorizontalSeparator")
-prayList = custom.AddElement(cutsom,"List")
+prayList = custom.AddElement(custom,"List")
     prayList.Items = customMessageConfig.PrayAnswer
     prayList.ItemToShow = 4
     prayList.Label = "Custom answer to pray"
+To_Add_Pray = custom.AddElement(custom,"TextInput")
+    To_Add_Pray.Label = "Custom pray answer to add"
+    To_Add_Pray.MultiLine = false
+AddPray = custom.AddElement(custom,"Button")
+    AddPray.Label = "Add custom pray"
+    AddPray.OnCLick = function()
+        if To_Add_Pray.Value == "" then
+            AddPray.Label = "Please enter something else than no text at all"
+            return
+        end
+        table.insert(customMessageConfig.PrayAnswer,To_Add_Pray.Value)
+        updateMessageConfig()
+        prayList.Items = customMessageConfig.PrayAnswer
+    end
+AddPray.SameLine = tue
+RemovePray = custom.AddElement(custom,"Button")
+
 --
 endpoint = "http://labs.bible.org/api/?passage=random&type=json"
 getVerse = function()
