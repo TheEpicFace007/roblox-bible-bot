@@ -160,7 +160,7 @@ end
 customDescTitle = custom.AddElement(custom,"Label")
 customDescTitle.Text = "Information about custom messages: "
 customDesc = custom.AddElement(custom,"Label")
-    customDesc.Text = "You can add HUMAN into a sentence for a custom message to mention the user who's using the commands. Example:\nHello HUMAN. I hope you are doing well HUMAN.\nYou can share the custom messages by sharing the file `bible_bot_custom_message.json`(located in the workspace folder of protosmasher) with others."
+    customDesc.Text = "You can add HUMAN into a sentence for a custom message to mention the user who's using the commands. Example:\nHello HUMAN. I hope you are doing well HUMAN.\nYou can share the custom messages by sharing the file `bible_bot_custom_message.json`(located in the workspace folder of protosmasher) with others. Get message packs by joining the discord."
 -- get discord btn
 getDiscord = custom.AddElement(custom,"Button")
 getDiscord.Label = "Get bible discord invite"
@@ -215,7 +215,12 @@ RemoveWelcomeMessage = custom.AddElement(custom,"Button")
             ToAdd_Welcome.Label = "Remove custom greeting"
         end
     end
-
+-- custom pray answer
+custom.AddElement(custom,"HorizontalSeparator")
+prayList = custom.AddElement(cutsom,"List")
+    prayList.Items = customMessageConfig.PrayAnswer
+    prayList.ItemToShow = 4
+    prayList.Label = "Custom answer to pray"
 --
 endpoint = "http://labs.bible.org/api/?passage=random&type=json"
 getVerse = function()
