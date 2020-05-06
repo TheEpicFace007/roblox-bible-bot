@@ -226,7 +226,7 @@ To_Add_Pray = custom.AddElement(custom,"TextInput")
     To_Add_Pray.MultiLine = false
 AddPray = custom.AddElement(custom,"Button")
     AddPray.Label = "Add custom pray"
-    AddPray.OnCLick = function()
+    AddPray.OnClick = function()
         if To_Add_Pray.Value == "" then
             AddPray.Label = "Please enter something else than no text at all"
             return
