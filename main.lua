@@ -269,15 +269,22 @@ end
 
 commands.confesion = function(Player,message)
 
-   local ans = {"Your sin has been forgiven, rejoice!";"I am overjoyed you have acknowledged your sin, God shall forgive you.";"You are forgiven, be glad Jesus died for your sake.";"I can see your sin weighs heavily on you, God has forgiven you!";"This is a sin that can not be easily forgiven, i demand you say Glory To God 20 times!";"Your sin mocks the commandments put forth by God, 20 Holy Mary's!";
-                 "Your blasphemy ends here, pray Our Father and Holy Mary 30 times each right now!";"Your actions disgust our Lord";"Satan, smite " .. Player.Name ..
-                " down for " .. Player.Name .. " has dared to defy God himself."};
+   local ans = {"Your sin has been forgiven, rejoice!";"I am overjoyed you have acknowledged your sin, God shall forgive you.";"You are forgiven, be glad Jesus died for your sake.";"I can see your sin weighs heavily on you, God has forgiven you!";"This is a sin that can not be easily forgiven, i demand you say Glory To God 20 times!";"Your sin mocks the commandments put forth by God, 20 Holy Mary's!";"Your blasphemy ends here, pray Our Father and Holy Mary 30 times each right now!";"Your actions disgust our Lord";"Satan, smite " .. Player.Name .. " down for " .. Player.Name .. " has dared to defy God himself."};
     chat(ans[math.random(#ans)])
 end
 
 commands.pray = function(Player,message)
-
-   local possibleAns = {"Amen";"Your greed disgusts me, confess your sin so that i may judge you by typing !confess [describe your foul actions here]";"Your prayer will be answered, Hallelujuh!";"Your prayer has been rejected for blasphemy! type !confess [your sin here] for judgement.";"I understand your feelings, it shall be done soon";"What you ask will be done, be patient my son";"Your prayer will be granted, in time."}
+   local possibleAns = {"Amen";"Your greed disgusts me, confess your sin so that I may judge you by typing !confess [describe your foul actions here]";"Your prayer will be answered, Hallelujuh!";"Your prayer has been rejected for blasphemy! type !confess [your sin here] for judgement.";"I understand your feelings, it shall be done soon";"What you ask will be done, be patient my son";"Your prayer will be granted, in time."}
+    if #customMessageConfig.PrayAnswer ~= 0 then
+        for _,msg in next,possibleAns do
+            if string.find(msg,"HUMAN") then
+                local messageRepl = string.gsub(msg,"HUMAN",NewPlayer.Name)
+                table.insert(possibleAns,messageRepl)
+            else
+                table.insert(possibleAns,msg)
+            end
+        end
+    end
     chat(possibleAns[math.random(#possibleAns)])
 end
 
