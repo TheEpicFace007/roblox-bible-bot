@@ -192,7 +192,7 @@ WelcomeList = custom.AddElement(custom,"List")
     WelcomeList.ItemsToShow = 4
     WelcomeList.Label = "Custom welcome messages"
 
-    ToAdd_Welcome = custom.AddElement(custom,"TextInput")
+ToAdd_Welcome = custom.AddElement(custom,"TextInput")
     ToAdd_Welcome.Label = "Custom welcome message to add"
     ToAdd_Welcome.MultiLine = false
     ToAdd_Welcome.SameLine = false
@@ -267,6 +267,9 @@ confesionList = custom.AddElement(custom,"List")
     confesionList.Items = customMessageConfig.ConffesionAnswer
     confesionList.ItemsToShow = 4
     confesionList.Label = "Custom message to add"
+ToAdd_conffesion = custom.AddElement(custom,"TextInput")
+    ToAdd_conffesion.Label = "Custom conffesion answer to add"
+    
 --
 
 getVerse = function()
@@ -324,7 +327,7 @@ commands.pray = function(Player,message)
     if #customMessageConfig.PrayAnswer ~= 0 then
         for _,msg in next,possibleAns do
             if string.find(msg,"HUMAN") then
-                local messageRepl = string.gsub(msg,"HUMAN",NewPlayer.Name)
+                local messageRepl = string.gsub(msg,"HUMAN",Player.Name)
                 table.insert(possibleAns,messageRepl)
             else
                 table.insert(possibleAns,msg)
