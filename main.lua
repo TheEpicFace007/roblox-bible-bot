@@ -41,8 +41,6 @@ updateSettingConfig = function() writefile("bible_bot_config.json",HttpService:J
 -- custom message
 customMessageConfig = HttpService:JSONDecode(readfile("bible_bot_custom_message.json"))
 updateMessageConfig = function() writefile("bible_bot_custom_message.json",HttpService:JSONEncode(customMessageConfig)) end
--- copyright notice:
-    
 -- bible bot window lib
 if not __IS_TESTING then
     panel =  Window.new("Bible bot configuration panel")
@@ -279,25 +277,38 @@ AddConfess = custom.AddElement(custom,"Button")
         end
         table.insert(customMessageConfig.ConffesionAnswer,ToAdd_conffesion.Value)
         updateMessageConfig()
+        confesionList.Items = customMessageConfig.ConffesionAnswer
         AddConfess.Label = "Added!"
         wait(2)
-        AddConfess.Label = "Add a custom conffesion"
+        AddConfess.Label = "Add a custom confesion"
+    end
+RemoveConfess = custom.AddElement(custom,"Button")
+    RemoveConfess.Label = "Remove the custom confesion"
+    RemoveConfess.SameLine = true
+    RemoveConfess.OnClick = function()
+        if ask_prompt("Deletion of custom message","Are you sure you want to delete the selected custom message? There will be no way of getting it back.","Yes","No") == 1 then
+            table.remove(customMessageConfig.ConffesionAnswer,confesionList.Selected+1)
+            updateMessageConfig()
+            confesionList.Items = customMessageConfig.ConffesionAnswer
+            RemoveConfess.Label = "Removed!"
+            wait(2)
+            RemoveConfess.Label = "Remove the custom confesion"
+        end
     end
 --
 
 getVerse = function()
     local response = HttpService:JSONDecode(game:HttpGet("http://labs.bible.org/api/?passage=random&type=json"))
-    return
-        response[1].bookname .. " " .. response[1].chapter .. ":" .. response[1].verse .. " " .. response[1].text
+    return response[1].bookname .. " " .. response[1].chapter .. ":" .. response[1].verse .. " " .. response[1].text
 end
 
 local t = tick()
 local nbOfChat = 0
+local timeToWait = 0
 chat = function(content)
     if settingConfig.isBibleBotDisabled then return end
-    nbOfChat = nbOfChat + 1
-    if tick() - t <= 0.80 and nbOfChat < 5 and nbOfChat > 2 then
-        wait(2)
+    if tick() - t <= 0.50 and nbOfChat < 5 and nbOfChat > 2 then
+        wait(5)
     end
     game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(content, "All")
     t = tick()
@@ -339,13 +350,13 @@ commands.confesion = function(Player,message)
         for _,customAns in next,customMessageConfig.ConffesionAnswer do
             if string.find(customAns,"HUMAN") then
                 local stringRepl = string.gsub(customAns,"HUMAN",Player.Name)
-                table.insert(customAns,stringRepl)
+                table.insert(ans,stringRepl)
             else
                 table.insert(ans,customAns)
             end
         end
-    chat(ans[math.random(#ans)])
     end
+    chat(ans[math.random(#ans)])
 end
 
 commands.pray = function(Player,message)
@@ -366,7 +377,6 @@ end
 onPlayerChat = function(chat_type,recipient,message)
     for i,v in next,settingConfig.blacklisted do if v == recipient.Name then return  end end
     message = string.lower(message)
-    chat_type = nil
     if message:match(".*!ask.-god.*") then
         commands:askgod()
     elseif message:match(".*!verse.*") or message:match(".!bible.*") then
