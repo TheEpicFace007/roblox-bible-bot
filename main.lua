@@ -40,6 +40,8 @@ updateSettingConfig = function() writefile("bible_bot_config.json",HttpService:J
 -- custom message
 customMessageConfig = HttpService:JSONDecode(readfile("bible_bot_custom_message.json"))
 updateMessageConfig = function() writefile("bible_bot_custom_message.json",HttpService:JSONEncode(customMessageConfig)) end
+-- copyright notice:
+    
 -- bible bot window lib
 if not __IS_TESTING then
     panel =  Window.new("Bible bot configuration panel")
@@ -153,6 +155,31 @@ getDiscord_1.OnClick = function()
     wait(2)
     getDiscord_1.Label = "Get discord invite"
 end
+viewNotice = panel.AddElement(panel,"Button")
+    viewNotice.Label = "View copyright notice"
+    viewNotice.SameLine = true
+    viewNotice.OnClick = function()
+        copyWin = Window.new("Copyright notice")
+        copyWin.AddElement(copyWin,"Label").Text = "Bible bot is licensed with the GNU AFFERO GENERAL LICENSE\n"
+        copyWin.AddElement(copyWin,"Label").Text = "Bible bot is free software: you can redistribute it and/or modify"
+        copyWin.AddElement(copyWin,"Label").Text = "it under the terms of the GNU AFFERO General Public License as published by"
+        copyWin.AddElement(copyWin,"Label").Text = "the Free Software Foundation, either version 3 of the License, or"
+        copyWin.AddElement(copyWin,"Label").Text = "(at your option) any later version.\n"
+        copyWin.AddElement(copyWin,"Label").Text = "Bible bot is distributed in the hope that it will be useful,"
+        copyWin.AddElement(copyWin,"Label").Text = "but WITHOUT ANY WARRANTY; without even the implied warranty of"
+        copyWin.AddElement(copyWin,"Label").Text = "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the"
+        copyWin.AddElement(copyWin,"Label").Text = " GNU General Public License for more details.\n"
+        copyWin.AddElement(copyWin,"Label").Text = "You should have received a copy of the GNU affero General Public License"
+        copyWin.AddElement(copyWin,"Label").Text = "along with Bible bot. If not see https://www.gnu.org/license"
+    local closeWin = copyWin.AddElement(copyWin,"Button")
+        closeWin.Label = "View program source code"
+        closeWin.OnClick = function()
+            setclipboard("https://github.com/ViniDalvino/roblox-bible-bot") 
+            closeWin.Label = "Copied link to that redirect to the source code"
+            wait(2)
+            closeWin.Label = "View program source code"
+        end
+    end
 -- Custom message window
 if not __IS_TESTING then
     custom = Window.new("Custom messages of bible bot")
@@ -412,7 +439,7 @@ end))
 
 -- update config coroutine
 coroutine.resume(coroutine.create(function()
-    while wait(0.1) do
+    while wait(5) do
         settingConfig.isNotDoingAd = isNotDoingAd.State
         settingConfig.doNotWelcome = isGreeter.State
         settingConfig.adDelay = adDelay.Value
@@ -429,7 +456,7 @@ end))
     Bible bot is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+    GNU AFFERO General Public License for more details.
 
     You should have received a copy of the GNU General Public License
     along with Bible bot.  If not, see <https://www.gnu.org/licenses/>.
