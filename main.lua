@@ -1,3 +1,5 @@
+-- License notice: AGPL-3.0-only(More information about the license at the end of the file)
+
 -- it allow me to generatom infinite window 0that have the "same" name
 -- it's for testing purpose, do not touch if you arent developping the scrip
 -- it's meant for protosmasher widnow lib that authorize you to only have 1 window
@@ -418,3 +420,16 @@ coroutine.resume(coroutine.create(function()
         updateSettingConfig()
     end
 end))
+--[[
+ This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU AFFERO General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.]]
