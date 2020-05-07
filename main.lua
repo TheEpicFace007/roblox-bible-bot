@@ -3,7 +3,7 @@
 -- it's meant for protosmasher widnow lib that authorize you to only have 1 window
 -- that have the same name
 -- math.randomseed is used to get a true random for the answers so the answer wont be always be the same
-math.randomseed(math.random(100000,tick()))
+math.randomseed(tick())
 
 local __IS_TESTING = false
 local HttpService = game:GetService "HttpService"
@@ -157,26 +157,6 @@ if not __IS_TESTING then
 else
     custom = Window.new("Custom messages of bible bot " .. math.random(9) .. math.random(9) .. math.random(9))
 end
-customDescTitle = custom.AddElement(custom,"Label")
-customDescTitle.Text = "Information about custom messages: "
-customDesc = custom.AddElement(custom,"Label")
-    customDesc.Text = "You can add HUMAN into a sentence for a custom message to mention the user who's using the commands. Example:\nHello HUMAN. I hope you are doing well HUMAN.\nYou can share the custom messages by sharing the file `bible_bot_custom_message.json`\n(located in the workspace folder of protosmasher) with others. Get message packs by joining the discord."
--- get discord btn
-getDiscord = custom.AddElement(custom,"Button")
-getDiscord.Label = "Get bible discord invite"
-getDiscord.OnClick = function()
-    setclipboard("https://discord.gg/bW5hsWa")
-    getDiscord.Label = "Copied invite into clipboard"
-    wait(2)
-    getDiscord.Label = "Get discord invite"
-end
--- hide desc checkbox
-hideDesc = custom.AddElement(custom,"Checkbox")
-    hideDesc.SameLine = true
-    hideDesc.State = settingConfig.isHidingCustomMessageDesc
-    hideDesc.Label = "Hide the description of the windows"
--- separator
-custom.AddElement(custom,"HorizontalSeparator")
 -- add message to the custom welcome msg
 WelcomeList = custom.AddElement(custom,"List")
     WelcomeList.Items = customMessageConfig.WelcomeMessage
@@ -238,7 +218,7 @@ AddPray = custom.AddElement(custom,"Button")
         wait(2)
         AddPray.Label = "Add custom pray"
     end
-AddPray.SameLine = true
+AddPray.SameLine = false
 RemovePray = custom.AddElement(custom,"Button")
     RemovePray.Label = "Remove the selected custom pray"
     RemovePray.OnClick = function()
@@ -258,20 +238,18 @@ confesionList = custom.AddElement(custom,"List")
     confesionList.Items = customMessageConfig.ConffesionAnswer
     confesionList.ItemsToShow = 4
     confesionList.Label = "Custom message to add"
-    
 --
 
-endpoint = "http://labs.bible.org/api/?passage=random&type=json"
 getVerse = function()
-    local response = HttpService:JSONDecode(game:HttpGet(endpoint))
+    local response = HttpService:JSONDecode(game:HttpGet("http://labs.bible.org/api/?passage=random&type=json"))
     return
-        response[1].bookname .. ": " .. response[1].chapter .. ":" .. response[1].verse .. " " .. response[1].text
+        response[1].bookname .. " " .. response[1].chapter .. ":" .. response[1].verse .. " " .. response[1].text
 end
 local t = tick()
 chat = function(content)
     if settingConfig.isBibleBotDisabled then return end
-    if tick() - t < 0.80 then
-        wait(2)
+    if tick() - t <= 0.80 then
+        wait(4)
     end
     game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(content, "All")
     t = tick()
@@ -375,9 +353,9 @@ Players.PlayerAdded:Connect(function(NewPlayer)
             if os.date("*t").hour > 12 and os.date("*t").hour < 18 then
                 return "God will not forgive you for making him wait " .. os.date("*t") - 18 .. " to listen your question(Chat !ask god to ask question) DONT MAKE GOD WASTE HIS TIME"
             elseif os.date("*t").hour > 18  or os.date("*t").hour < 5 then
-                return "God will not forgive you for making him wait " .. os.date("*t") - 5 .. " to listen your question(Chat !ask god to ask question) DONT MAKE GOD WASTE HIS TIME"
+                return "God will not forgive you for making him wait " .. os.date("*t").hour - 5 .. " to listen your question(Chat !ask god to ask question) DONT MAKE GOD WASTE HIS TIME"
             elseif os.date("*t").hour > 5  and os.date("*t").hour < 12 then
-                return "God will not forgive you for making him wait " .. os.date("*t") - 5 .. " to listen your question(Chat !ask god to ask question) DONT MAKE GOD WASTE HIS TIME"
+                return "God will not forgive you for making him wait " .. os.date("*t").hour - 5 .. " to listen your question(Chat !ask god to ask question) DONT MAKE GOD WASTE HIS TIME"
             end
         end;
     }
@@ -430,21 +408,6 @@ coroutine.resume(coroutine.create(function()
     end
 end))
 
--- hide desc coroutine
-coroutine.resume(coroutine.create(function()
-    while wait() do
-        if hideDesc.State then
-            customDesc.Text = ""
-            customDescTitle.Text = ""
-            hideDesc.Label = "Show the description of the windows"
-        else
-            customDesc.Text = "You can add HUMAN into a sentence for a custom message to mention the user who's using the commands. Example:\nHello HUMAN. I hope you are doing well HUMAN.\nYou can share the custom messages by sharing the file `bible_bot_custom_message.json`(located in the workspace folder of protosmasher) with others."
-            customDescTitle.Text = "Information about custom messages: "
-            hideDesc.Label = "Hide the description of the windows"
-        end
-    end
-end))
-
 -- update config coroutine
 coroutine.resume(coroutine.create(function()
     while wait(0.1) do
@@ -452,7 +415,6 @@ coroutine.resume(coroutine.create(function()
         settingConfig.doNotWelcome = isGreeter.State
         settingConfig.adDelay = adDelay.Value
         settingConfig.isBibleBotDisabled = isBibleBotDisabled.State
-        settingConfig.isHidingCustomMessageDesc = hideDesc.State
         updateSettingConfig()
     end
 end))
