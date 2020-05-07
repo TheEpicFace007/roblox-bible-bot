@@ -1,4 +1,5 @@
--- License notice: AGPL-3.0-only(More information about the license at the end of the file)
+-- License notice: AGPL-3.0-only
+-- (More information about the license at the end of the file)
 
 -- it allow me to generatom infinite window 0that have the "same" name
 -- it's for testing purpose, do not touch if you arent developping the scrip
@@ -269,7 +270,19 @@ confesionList = custom.AddElement(custom,"List")
     confesionList.Label = "Custom message to add"
 ToAdd_conffesion = custom.AddElement(custom,"TextInput")
     ToAdd_conffesion.Label = "Custom conffesion answer to add"
-
+AddConfess = custom.AddElement(custom,"Button")
+    AddConfess.Label = "Add a custom conffesion"
+    AddConfess.OnClick = function()
+        if ToAdd_conffesion.Value == "" then
+            AddConfess.Label = "Please enter something else than no text"
+            return
+        end
+        table.insert(customMessageConfig.ConffesionAnswer,ToAdd_conffesion.Value)
+        updateMessageConfig()
+        AddConfess.Label = "Added!"
+        wait(2)
+        AddConfess.Label = "Add a custom conffesion"
+    end
 --
 
 getVerse = function()
@@ -321,9 +334,18 @@ commands.help = function()
 end
 
 commands.confesion = function(Player,message)
-
-   local ans = {"Your sin has been forgiven, rejoice!";"I am overjoyed you have acknowledged your sin, God shall forgive you.";"You are forgiven, be glad Jesus died for your sake.";"I can see your sin weighs heavily on you, God has forgiven you!";"This is a sin that can not be easily forgiven, i demand you say Glory To God 20 times!";"Your sin mocks the commandments put forth by God, 20 Holy Mary's!";"Your blasphemy ends here, pray Our Father and Holy Mary 30 times each right now!";"Your actions disgust our Lord";"Satan, smite " .. Player.Name .. " down for " .. Player.Name .. " has dared to defy God himself."};
+    local ans = {"Your sin has been forgiven, rejoice!";"I am overjoyed you have acknowledged your sin, God shall forgive you.";"You are forgiven, be glad Jesus died for your sake.";"I can see your sin weighs heavily on you, God has forgiven you!";"This is a sin that can not be easily forgiven, i demand you say Glory To God 20 times!";"Your sin mocks the commandments put forth by God, 20 Holy Mary's!";"Your blasphemy ends here, pray Our Father and Holy Mary 30 times each right now!";"Your actions disgust our Lord";"Satan, smite " .. Player.Name .. " down for " .. Player.Name .. " has dared to defy God himself."};
+    if #customMessageConfig.ConffesionAnswer ~= 0 then
+        for _,customAns in next,customMessageConfig.ConffesionAnswer do
+            if string.find(customAns,"HUMAN") then
+                local stringRepl = string.gsub(customAns,"HUMAN",Player.Name)
+                table.insert(customAns,stringRepl)
+            else
+                table.insert(ans,customAns)
+            end
+        end
     chat(ans[math.random(#ans)])
+    end
 end
 
 commands.pray = function(Player,message)
