@@ -269,7 +269,7 @@ confesionList = custom.AddElement(custom,"List")
     confesionList.Label = "Custom message to add"
 ToAdd_conffesion = custom.AddElement(custom,"TextInput")
     ToAdd_conffesion.Label = "Custom conffesion answer to add"
-    
+
 --
 
 getVerse = function()
@@ -277,14 +277,18 @@ getVerse = function()
     return
         response[1].bookname .. " " .. response[1].chapter .. ":" .. response[1].verse .. " " .. response[1].text
 end
+
 local t = tick()
+local nbOfChat = 0
 chat = function(content)
     if settingConfig.isBibleBotDisabled then return end
-    if tick() - t <= 0.80 then
-        wait(4)
+    nbOfChat = nbOfChat + 1
+    if tick() - t <= 0.80 and nbOfChat < 5 and nbOfChat > 2 then
+        wait(2)
     end
     game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(content, "All")
     t = tick()
+    if nbOfChat >= 5 then nbOfChat = 0 end
 end
 
 
