@@ -173,7 +173,7 @@ viewNotice = panel.AddElement(panel,"Button")
     local closeWin = copyWin.AddElement(copyWin,"Button")
         closeWin.Label = "View program source code"
         closeWin.OnClick = function()
-            setclipboard("https://github.com/ViniDalvino/roblox-bible-bot") 
+            setclipboard("https://github.com/ViniDalvino/roblox-bible-bot")
             closeWin.Label = "Copied link to that redirect to the source code"
             wait(2)
             closeWin.Label = "View program source code"
@@ -295,6 +295,43 @@ RemoveConfess = custom.AddElement(custom,"Button")
             RemoveConfess.Label = "Remove the custom confesion"
         end
     end
+-- custom advertisement
+custom.AddElement(custom,"HorizontalSeparator")
+botAdList = custom.AddElement(custom,"List")
+    botAdList.Label = "Custom bot advertisement"
+    botAdList.ItemsToShow = 4
+    botAdList.Items = customMessageConfig.BotAdvertisment
+ToAdd_bot_ad = custom.AddElement(custom,"TextInput")
+    ToAdd_bot_ad.Label = "Enter a custom bot advertisment you want to add"
+AddAd = custom.AddElement(custom,"Button")
+    AddAd.Label = "Add the advertisment sentence"
+    AddAd.OnClick = function()
+        if ToAdd_bot_ad.Value == 0 then AddAd.Label = "Please enter something else than no text" wait(2) ToAdd_bot_ad.Label = "Enter a custom bot advertisment you want to add" return end
+        table.insert(customMessageConfig.BotAdvertisment,ToAdd_bot_ad.Value)
+        updateMessageConfig()
+        botAdList.Items = customMessageConfig.BotAdvertisment
+        AddAd.Label = "Addded!"
+        wait(2)
+        AddAd.Label = "Add the advertisment sentence"
+    end
+RemoveAd = custom.AddElement(custom,"Button")
+    RemoveAd.SameLine = true
+    RemoveAd.Label = "Remove the selected advertisment"
+    RemoveAd.OnClick = function()
+        if ask_prompt("Deletion of custom message","Are you sure you want to delete the selected custom message? There will be no way of getting it back.","Yes","No") == 1 then
+            table.remove(customMessageConfig.BotAdvertisment,botAdList.Selected+1)
+            updateMessageConfig()
+            botAdList.Items = customMessageConfig.BotAdvertisment
+            RemoveAd.Label = "Removed!"
+            wait(2)
+            RemoveAd.Label = "Remove the selected advertisment"
+        end
+    end
+-- help
+custom.AddElement(custom,"HorizonatalSeparator")
+custom.AddElement(custom,"Label").Text = "Custom message information:"
+custom.AddElement(custom,"Label").Text = "Add `HUMAN` to mention the player or a random player(it will be random if it's a the advertisement)"
+custom.AddElement(custom,"Label").Text = "As example \"Hello, HUMAN!\" will make bible bot say Hello Louka if the player Named Louka joined the game."
 --
 
 getVerse = function()
@@ -307,8 +344,8 @@ local nbOfChat = 0
 local timeToWait = 0
 chat = function(content)
     if settingConfig.isBibleBotDisabled then return end
-    if tick() - t <= 0.50 and nbOfChat < 5 and nbOfChat > 2 then
-        wait(5)
+    if tick() - t <= 0.60 and nbOfChat < 5 and nbOfChat > 2 then
+        wait(15)
     end
     game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(content, "All")
     t = tick()
@@ -419,7 +456,7 @@ Players.PlayerAdded:Connect(function(NewPlayer)
         end;
         function()
             if os.date("*t").hour > 12 and os.date("*t").hour < 18 then
-                return "God will give you a second chance for making him wait " .. os.date("*t") - 18 .. " to listen your question(Chat !ask god to ask question) JUST DONT MAKE GOD WASTE HIS TIME"
+                return "God will give you a second chance for making him wait " .. 18 - os.date("*t").hour .. " to listen your question(Chat !ask god to ask question) JUST DONT MAKE GOD WASTE HIS TIME"
             elseif os.date("*t").hour > 18  or os.date("*t").hour < 5 then
                 return "God will give you a second chance for making him wait " .. os.date("*t").hour - 5 .. " to listen your question(Chat !ask god to ask question) JUST DONT MAKE GOD WASTE HIS TIME"
             elseif os.date("*t").hour > 5  and os.date("*t").hour < 12 then
@@ -477,7 +514,6 @@ coroutine.resume(coroutine.create(function()
            "Remember to study the bible to further your love for God. type !verse to study a verse of the bible, Chat !help to know other commands";
            "Submit to the divine authority of God and learn more of the one true faith by typing !help to know all the availaible commands of bible bot"
        }
-       local ad = {}
         if #customMessageConfig.BotAdvertisment ~= 0 then 
             local Player = game.Players:GetPlayers()
             for _,customMsg in next,customMessageConfig.BotAdvertisment do
