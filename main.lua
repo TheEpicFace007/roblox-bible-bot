@@ -331,10 +331,10 @@ end
 
 commands.askgod = function()
     local ans = {
-        "Yes"; "No"; "It is best for you not to know"; "Your question is beyond your mortal comprehension"; "Blasphemy! ask no more."; "I do not care to entertain your trivial question";
-        "You should be ashamed of what you are asking"; "Perhaps"; "I have nothing to say about it"; "I refuse to answer that"; "This is not a question befit for me, ask another"; "Reask that question, it makes no sense";
+        "Yes"; "No"; "It may be best for you not to know"; "Your question is beyond your mortal comprehension"; "Blasphemy! Ask no more."; "I do not care to entertain your trivial question";
+        "You should be ashamed of what you are asking"; "Perhaps"; "I have nothing to say about it"; "I refuse to answer that"; "This is not a question befit for me, ask another"; "Try re-asking that question, I can't purely understand a thing you're saying.";
         "A pity, made in my image yet couldn't ask a more reasonable question for me";"Such foul words, i am ashamed of creating you";"Think twice of what you ask of me";
-        "What you are asking me is blasphemy! confess your sin to me or face eternal torment";"You exist to suffer, no further comment.";"I didn't set fire to Gommorah for you to ask such a foolish question!";"Your question is why Judgement Day will come for us sooner then before.";"This question is beneath me, ask another!";
+        "What you are asking me is blasphemy! Confess your sin to me or face your consequences";"You exist to suffer, no further comment.";"I didn't set fire to Gommorah for you to ask such a foolish question!";"Your question is why Judgement Day will come for us sooner than before.";"This question is beneath me, ask another!";
     }
     chat(ans[math.random(#ans)])
 end
@@ -345,7 +345,7 @@ commands.help = function()
 end
 
 commands.confesion = function(Player,message)
-    local ans = {"Your sin has been forgiven, rejoice!";"I am overjoyed you have acknowledged your sin, God shall forgive you.";"You are forgiven, be glad Jesus died for your sake.";"I can see your sin weighs heavily on you, God has forgiven you!";"This is a sin that can not be easily forgiven, i demand you say Glory To God 20 times!";"Your sin mocks the commandments put forth by God, 20 Holy Mary's!";"Your blasphemy ends here, pray Our Father and Holy Mary 30 times each right now!";"Your actions disgust our Lord";"Satan, smite " .. Player.Name .. " down for " .. Player.Name .. " has dared to defy God himself."};
+    local ans = {"Your sin has been forgiven, rejoice!";"I am overjoyed you have acknowledged your sin, God shall forgive you.";"You are forgiven, be glad Jesus died for your sake.";"I can see your sin weighs heavily on you, God has forgiven you!";"This is a sin that can not be easily forgiven, I demand you say Glory To God 20 times!";"Your sin mocks the commandments put forth by Our Almighty God, 20 Holy Mary's!";"Your blasphemy ends here, pray Our Father and Holy Mary 30 times each right now!";"Your actions disgust our Lord";"Satan, smite " .. Player.Name .. " down for " .. Player.Name .. " has dared to defy God himself."};
     if #customMessageConfig.ConffesionAnswer ~= 0 then
         for _,customAns in next,customMessageConfig.ConffesionAnswer do
             if string.find(customAns,"HUMAN") then
@@ -360,7 +360,7 @@ commands.confesion = function(Player,message)
 end
 
 commands.pray = function(Player,message)
-   local possibleAns = {"Amen";"Your greed disgusts me, confess your sin so that I may judge you by typing !confess [describe your foul actions here]";"Your prayer will be answered, Hallelujuh!";"Your prayer has been rejected for blasphemy! type !confess [your sin here] for judgement.";"I understand your feelings, it shall be done soon";"What you ask will be done, be patient my son";"Your prayer will be granted, in time."}
+   local possibleAns = {"Amen";"Your greed terrifies me, confess your sin so that I may judge you by typing !confess [describe your foul actions here]";"Your prayer will be answered, Hallelujah!";"Your prayer has been rejected for blasphemy! type !confess [your sin here] for judgement.";"I understand your feelings, it shall be done soon";"What you ask will be done, be patient my son";"Your prayer will be granted, when the time comes."}
     if #customMessageConfig.PrayAnswer ~= 0 then
         for _,msg in next,possibleAns do
             if string.find(msg,"HUMAN") then
@@ -396,9 +396,9 @@ Players.PlayerAdded:Connect(function(NewPlayer)
     local welcomeSentence = {
         "Greetings " .. NewPlayer.Name .. ", study the bible to further your blossoming faith by chatting !verse";
         "Welcome " .. NewPlayer.Name .. "! to Bibleblox! study the bible with upmost vigor by chatting !verse";
-        "Welcome to the holiest place on roblox " .. NewPlayer.Name .. ". Study the bible as soon as possible by chatting !verse";
+        "Welcome to the holiest place in Roblox " .. NewPlayer.Name .. ". Study the bible as soon as possible by chatting !verse";
         "Feel free to ask any question to God by chatting !ask god [question]";
-        "Welcome to the most christian place on roblox " .. NewPlayer.Name;
+        "Welcome to the most Christian place in Roblox " .. NewPlayer.Name;
         function()
             if os.date("*t").hour > 12 and os.date("*t").hour < 18 then
                 return "Welcome " .. NewPlayer.Name .. " to the afternoon bible study session. Open your bible by chatting !verse"
@@ -410,20 +410,20 @@ Players.PlayerAdded:Connect(function(NewPlayer)
         end;
         function()
             if os.date("*t").hour > 12 and os.date("*t").hour < 18 then
-                return "God! you're late to the afternoon bible study session! Open your bible by chatting !verse quickly!!"
+                return "Gosh! you're late to the afternoon bible study session! Open your bible by chatting !verse quickly!!"
             elseif os.date("*t").hour > 18  or os.date("*t").hour < 5 then
-                return "I can't believe you are *THIS* late to the night bible study! Open the bible asap(chat !verse)"
+                return "I can't believe you are, ahem, THIS late to the night bible study! Open the bible asap(chat !verse)"
             elseif os.date("*t").hour > 5  and os.date("*t").hour < 12 then
-                return "Oh lord! You are late to the morning bible study session! Chat !verse to open the bible"
+                return "Oh my! You are late to the morning bible study session! Chat !verse to open the bible"
             end
         end;
         function()
             if os.date("*t").hour > 12 and os.date("*t").hour < 18 then
-                return "God will not forgive you for making him wait " .. os.date("*t") - 18 .. " to listen your question(Chat !ask god to ask question) DONT MAKE GOD WASTE HIS TIME"
+                return "God will give you a second chance for making him wait " .. os.date("*t") - 18 .. " to listen your question(Chat !ask god to ask question) JUST DONT MAKE GOD WASTE HIS TIME"
             elseif os.date("*t").hour > 18  or os.date("*t").hour < 5 then
-                return "God will not forgive you for making him wait " .. os.date("*t").hour - 5 .. " to listen your question(Chat !ask god to ask question) DONT MAKE GOD WASTE HIS TIME"
+                return "God will give you a second chance for making him wait " .. os.date("*t").hour - 5 .. " to listen your question(Chat !ask god to ask question) JUST DONT MAKE GOD WASTE HIS TIME"
             elseif os.date("*t").hour > 5  and os.date("*t").hour < 12 then
-                return "God will not forgive you for making him wait " .. os.date("*t").hour - 5 .. " to listen your question(Chat !ask god to ask question) DONT MAKE GOD WASTE HIS TIME"
+                return "God will give you a second for making him wait " .. os.date("*t").hour - 5 .. " to listen your question(Chat !ask god to ask question) JUST DONT MAKE GOD WASTE HIS TIME"
             end
         end;
     }
@@ -452,11 +452,11 @@ Players.PlayerAdded:Connect(function(NewPlayer)
 end)
 
 ad = {
-    "Greetings all, I am bible bot, I guide the masses towards realizing the true faith. Chat !help to know all the available commands for me";
+    "Greetings all, I am bible bot! And I guide the masses towards realizing the true faith. Chat !help to know all the available commands for me";
     "I have come forth to bring the good news to all! Chat !verse to hear of it";
-    "Do not commit sin or suffer for eternity in hell! Chat !help to know the availaible commands for bible bot";
+    "Do not live in sin or suffer for eternity in hell! Chat !help to know the availaible commands for bible bot";
     "Always remember to pray to God. Chat !pray [someone or something you want] to learn what He has in store for your prayer";
-    "Remember to study the bible to further your love for God. type !verse to study a verse of the bible, Chat !help to know other commands";
+    "Remember to study the bible and praise Our Lord God to further your love for Him. type !verse to study a verse of the bible, Chat !help to know other commands";
     "Submit to the divine authority of God and learn more of the one true faith by typing !help to know all the availaible commands of bible bot"
 }
 oldAdTimerValue = adDelay.Value
@@ -470,7 +470,7 @@ __TIME_WITHIN_EACH__CONFIG_SAVE = 0.1
 coroutine.resume(coroutine.create(function()
     while game:GetService("RunService").Heartbeat:Wait() do
        ad = {
-           "Greetings all, I am bible bot, I guide the masses towards realizing the true faith. Chat !help to know all the available commands for me";
+           "Greetings all, I am bible bot. I guide the masses towards realizing the true faith. Chat !help to know all the available commands for me";
            "I have come forth to bring the good news to all! Chat !verse to hear of it";
            "Do not commit sin or suffer for eternity in hell! Chat !help to know the availaible commands for bible bot";
            "Always remember to pray to God. Chat !pray [someone or something you want] to learn what He has in store for your prayer";
