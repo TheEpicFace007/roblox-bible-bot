@@ -6,10 +6,8 @@
 -- it's meant for protosmasher widnow lib that authorize you to only have 1 window
 -- that have the same name
 -- math.randomseed is used to get a true random for the answers so the answer wont be always be the same
+assert(PROTOSMASHER_LOADED,"The exploit you are using is not compatible with this script. Please use protosmasher to be able to use the script.")
 math.randomseed(tick())
-function isTblKeySame(t1,t2)
-    for i,v in next, t1 do
-        if t2[i] then 
 local __IS_TESTING = false
 local HttpService = game:GetService "HttpService"
 local Players = game:GetService("Players")
