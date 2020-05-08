@@ -43,13 +43,13 @@ customMessageConfig = HttpService:JSONDecode(readfile("bible_bot_custom_message.
 updateMessageConfig = function() writefile("bible_bot_custom_message.json",HttpService:JSONEncode(customMessageConfig)) end
 -- bible bot window lib
 if not __IS_TESTING then
-    panel =  Window.new("Bible bot configuration panel")
+    panel =  Window.new("Bible Bot configuration panel")
 else
-    panel =  Window.new("Bible bot configuration panel " .. math.random(9) .. math.random(9) .. math.random(9))
+    panel =  Window.new("Bible Bot configuration panel " .. math.random(9) .. math.random(9) .. math.random(9))
 end
 -- Advertisment timer label
 adLabel = panel.AddElement(panel,"Label")
-    adLabel.Text = "Adverisment configuration"
+    adLabel.Text = "Advertisment configuration"
 -- ad_timer
 adDelay = panel.AddElement(panel,"IntSlider")
     adDelay.Min   = 15
@@ -91,30 +91,30 @@ end
 panel.AddElement(panel,"HorizontalSeparator")
 -- option
 option = panel.AddElement(panel,"Label")
-    option.Text = "Enable or disable biblebot feature"
+    option.Text = "Enable or disable Bible Bot feature"
 -- is not doing ad checkbox
 isNotDoingAd = panel.AddElement(panel,"Checkbox")
-    isNotDoingAd.Label = "Disable biblebot advertisement"
+    isNotDoingAd.Label = "Disable BibleBot advertisement"
     isNotDoingAd.State = settingConfig.isNotDoingAd
 -- is not doing greeting checkbox
 isGreeter = panel.AddElement(panel,"Checkbox")
     isGreeter.State = settingConfig.doNotWelcome
-    isGreeter.Label = "Disable biblebot greeting"
+    isGreeter.Label = "Disable Bible Bot greeting"
     isGreeter.SameLine = true
 -- enable bible bot tick
 isBibleBotDisabled = panel.AddElement(panel,"Checkbox")
     isBibleBotDisabled.State = settingConfig.isBibleBotDisabled
-    isBibleBotDisabled.Label = "Disable bible bot"
+    isBibleBotDisabled.Label = "Disable Bible Bot"
     isBibleBotDisabled.SameLine = true
 -- add blacklisted user to using the bot
 panel.AddElement(panel,"HorizontalSeparator")
 blacklisted = panel.AddElement(panel,"List")
-    blacklisted.Label = "Blacklisted people from using bible bot"
+    blacklisted.Label = "Blacklisted people from using Bible Bot"
     blacklisted.Items = settingConfig.blacklisted
     blacklisted.ItemsToShow = 3
 
 AddBlacklistTextbox = panel.AddElement(panel,"TextInput")
-    AddBlacklistTextbox.Label = "Add a user to be blacklisted from using bible bot commands"
+    AddBlacklistTextbox.Label = "Add a user to be blacklisted from using the Bible Bot commands"
     AddBlacklistTextbox.MultiLine = false
 
 AddBlacklistButton_Add_User = panel.AddElement(panel,"Button")
@@ -200,7 +200,7 @@ AddWelcomeMessage = custom.AddElement(custom,"Button")
     AddWelcomeMessage.Label = "Add welcome message"
     AddWelcomeMessage.SameLine = false
     AddWelcomeMessage.OnClick = function ()
-        if ToAdd_Welcome.Value == "" then AddWelcomeMessage.Label = "Please enter something else than no message" wait(3) AddWelcomeMessage.Label = "Add welcome message" return end
+        if ToAdd_Welcome.Value == "" then AddWelcomeMessage.Label = "Please enter something else than no message at all" wait(3) AddWelcomeMessage.Label = "Add welcome message" return end
         table.insert(customMessageConfig.WelcomeMessage,ToAdd_Welcome.Value)
         ToAdd_Welcome.Label = "Added custom greeting"
         WelcomeList.Items = customMessageConfig.WelcomeMessage
@@ -228,7 +228,7 @@ custom.AddElement(custom,"HorizontalSeparator")
 prayList = custom.AddElement(custom,"List")
     prayList.Items = customMessageConfig.PrayAnswer
     prayList.ItemsToShow = 4
-    prayList.Label = "Custom answer to pray"
+    prayList.Label = "Custom answer to prayer"
 To_Add_Pray = custom.AddElement(custom,"TextInput")
     To_Add_Pray.Label = "Custom pray answer to add"
     To_Add_Pray.MultiLine = false
@@ -248,7 +248,7 @@ AddPray = custom.AddElement(custom,"Button")
     end
 AddPray.SameLine = false
 RemovePray = custom.AddElement(custom,"Button")
-    RemovePray.Label = "Remove the selected custom pray"
+    RemovePray.Label = "Remove the selected custom prayer"
     RemovePray.OnClick = function()
         if ask_prompt("Deletion of custom message","Are you sure you want to delete the selected custom message? There will be no way of getting it back.","Yes","No") == 1 then
             table.remove(customMessageConfig.PrayAnswer,prayList.Selected+1)
@@ -272,7 +272,7 @@ AddConfess = custom.AddElement(custom,"Button")
     AddConfess.Label = "Add a custom conffesion"
     AddConfess.OnClick = function()
         if ToAdd_conffesion.Value == "" then
-            AddConfess.Label = "Please enter something else than no text"
+            AddConfess.Label = "Please enter something else than no text at all"
             return
         end
         table.insert(customMessageConfig.ConffesionAnswer,ToAdd_conffesion.Value)
@@ -331,9 +331,9 @@ end
 
 commands.askgod = function()
     local ans = {
-        "Yes"; "No"; "It may be best for you not to know"; "Your question is beyond your mortal comprehension"; "Blasphemy! Ask no more."; "I do not care to entertain your trivial question";
-        "You should be ashamed of what you are asking"; "Perhaps"; "I have nothing to say about it"; "I refuse to answer that"; "This is not a question befit for me, ask another"; "Try re-asking that question, I can't purely understand a thing you're saying.";
-        "A pity, made in my image yet couldn't ask a more reasonable question for me";"Such foul words, i am ashamed of creating you";"Think twice of what you ask of me";
+        "Yes"; "No"; "It may be best for you not to know"; "Your question is beyond your mortal comprehension."; "Blasphemy! Ask no more."; "I do not care to entertain your trivial question.";
+        "You should be ashamed of what you are asking."; "Perhaps."; "I have nothing to say about it"; "I refuse to answer that"; "This is not a question befit for me, ask another."; "Try re-asking that question, I can't purely understand a thing you're saying.";
+        "A pity, made in my image yet couldn't ask a more reasonable question for me...";"Such foul words, I am ashamed of you";"Think twice of what you ask of me.";
         "What you are asking me is blasphemy! Confess your sin to me or face your consequences";"You exist to suffer, no further comment.";"I didn't set fire to Gommorah for you to ask such a foolish question!";"Your question is why Judgement Day will come for us sooner than before.";"This question is beneath me, ask another!";
     }
     chat(ans[math.random(#ans)])
@@ -452,7 +452,7 @@ Players.PlayerAdded:Connect(function(NewPlayer)
 end)
 
 ad = {
-    "Greetings all, I am bible bot! And I guide the masses towards realizing the true faith. Chat !help to know all the available commands for me";
+    "Greetings all, I am Bible bot! And I guide the masses towards realizing the true faith. Chat !help to know all the available commands for me";
     "I have come forth to bring the good news to all! Chat !verse to hear of it";
     "Do not live in sin or suffer for eternity in hell! Chat !help to know the availaible commands for bible bot";
     "Always remember to pray to God. Chat !pray [someone or something you want] to learn what He has in store for your prayer";
@@ -470,7 +470,7 @@ __TIME_WITHIN_EACH__CONFIG_SAVE = 0.1
 coroutine.resume(coroutine.create(function()
     while game:GetService("RunService").Heartbeat:Wait() do
        ad = {
-           "Greetings all, I am bible bot. I guide the masses towards realizing the true faith. Chat !help to know all the available commands for me";
+           "Greetings all, I am Bible bot. I guide the masses towards realizing the true faith. Chat !help to know all the available commands for me";
            "I have come forth to bring the good news to all! Chat !verse to hear of it";
            "Do not commit sin or suffer for eternity in hell! Chat !help to know the availaible commands for bible bot";
            "Always remember to pray to God. Chat !pray [someone or something you want] to learn what He has in store for your prayer";
