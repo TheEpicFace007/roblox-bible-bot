@@ -327,7 +327,11 @@ RemoveAd = custom.AddElement(custom,"Button")
             RemoveAd.Label = "Remove the selected advertisment"
         end
     end
-
+-- help
+custom.AddElement(custom,"HorizonatalSeparator")
+custom.AddElement(custom,"Label").Text = "Custom message information:"
+custom.AddElement(custom,"Label").Text = "Add `HUMAN` to mention the player or a random player(it will be random if it's a the advertisement)"
+custom.AddElement(custom,"Label").Text = "As example \"Hello, HUMAN!\" will make bible bot say Hello Louka if the player Named Louka joined the game."
 --
 
 getVerse = function()
