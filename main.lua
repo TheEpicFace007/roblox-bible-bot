@@ -295,6 +295,11 @@ RemoveConfess = custom.AddElement(custom,"Button")
             RemoveConfess.Label = "Remove the custom confesion"
         end
     end
+-- custom advertisement
+botAdList = custom.AddElement(custom,"List")
+    botAdList.Label = "Custom bot advertisement"
+    botAdList.ItemsToShow = 4
+    botAdList.Items = customMessageConfig.BotAdvertisment
 --
 
 getVerse = function()
