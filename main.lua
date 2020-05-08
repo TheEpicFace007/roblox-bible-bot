@@ -468,11 +468,32 @@ end)
 __TIME_WITHIN_EACH__CONFIG_SAVE = 0.1
 -- advertisement corutine
 coroutine.resume(coroutine.create(function()
-    while wait() do
-        if isNotDoingAd.State == false then
-            chat(ad[math.random(#ad)])
-            wait(adDelay.Value)
+    while game:GetService("RunService").Heartbeat:Wait() do
+       ad = {
+           "Greetings all, I am bible bot, I guide the masses towards realizing the true faith. Chat !help to know all the available commands for me";
+           "I have come forth to bring the good news to all! Chat !verse to hear of it";
+           "Do not commit sin or suffer for eternity in hell! Chat !help to know the availaible commands for bible bot";
+           "Always remember to pray to God. Chat !pray [someone or something you want] to learn what He has in store for your prayer";
+           "Remember to study the bible to further your love for God. type !verse to study a verse of the bible, Chat !help to know other commands";
+           "Submit to the divine authority of God and learn more of the one true faith by typing !help to know all the availaible commands of bible bot"
+       }
+       local ad = {}
+        if #customMessageConfig.BotAdvertisment ~= 0 then 
+            local Player = game.Players:GetPlayers()
+            for _,customMsg in next,customMessageConfig.BotAdvertisment do
+                if string.find(customMsg,"HUMAN") then
+                    local stringRepl = string.gsub(customMsg,"HUMAN",
+                    Player[math.random(#Player)].Name)
+                    table.insert(ad,stringRepl)
+                else
+                    table.insert(ad,customMsg)
+                end
+            end
         end
+        if not isNotDoingAd.State then
+            chat(ad[math.random(#ad)])
+        end
+        wait(adDelay.Value)
     end
 end))
 
