@@ -7,7 +7,9 @@
 -- that have the same name
 -- math.randomseed is used to get a true random for the answers so the answer wont be always be the same
 math.randomseed(tick())
-
+function isTblKeySame(t1,t2)
+    for i,v in next, t1 do
+        if t2[i] then 
 local __IS_TESTING = false
 local HttpService = game:GetService "HttpService"
 local Players = game:GetService("Players")
@@ -331,7 +333,9 @@ RemoveAd = custom.AddElement(custom,"Button")
 custom.AddElement(custom,"HorizonatalSeparator")
 custom.AddElement(custom,"Label").Text = "Custom message information:"
 custom.AddElement(custom,"Label").Text = "Add `HUMAN` to mention the player or a random player(it will be random if it's a the advertisement)"
-custom.AddElement(custom,"Label").Text = "As example \"Hello, HUMAN!\" will make bible bot say Hello Louka if the player Named Louka joined the game."
+custom.AddElement(custom,"Label").Text = "As example \"OMG IT'S HUMAN!\" will make bible bot say \"OMG IT'S 3DSBOY08\" if the player named 3dsboy08 join the game."
+custom.AddElement(custom,"Label").Text = "Share the file `bible_bot_custom_message.json` to share custom message with others. Join the bible bot discord"
+custom.AddElement(custom,"Label").Text = "to get new  message pack."
 --
 
 getVerse = function()
@@ -345,11 +349,12 @@ local timeToWait = 0
 chat = function(content)
     if settingConfig.isBibleBotDisabled then return end
     if tick() - t <= 0.60 and nbOfChat < 5 and nbOfChat > 2 then
-        wait(15)
+        timeToWait = 10
     end
+    wait(timeToWait)
     game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(content, "All")
     t = tick()
-    if nbOfChat >= 5 then nbOfChat = 0 end
+    if nbOfChat >= 5 then nbOfChat = 0 timeToWait = 0 end
 end
 
 
