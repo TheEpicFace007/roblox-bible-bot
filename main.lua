@@ -347,7 +347,7 @@ RemoveAd = custom.AddElement(custom,"Button")
 -- ask god answer
 custom.AddElement(custom,"HorizontalSeparator")
     AskGodList = custom.AddElement(custom,"List")
-        AskGodList.Label = "Custom bot advertisement"
+        AskGodList.Label = "Custom bot ask god answer"
         AskGodList.ItemsToShow = 4
         AskGodList.Items = customMessageConfig.AskGodAnswer
 ToAdd_ask_god = custom.AddElement(custom,"TextInput")
@@ -365,7 +365,7 @@ AddAskAns = custom.AddElement(custom,"Button")
     end
 RemoveAskAns = custom.AddElement(custom,"Button")
     RemoveAskAns.SameLine = true
-    RemoveAskAns.Label = "Remove the selected advertisment"
+    RemoveAskAns.Label = "Remove the selected custom ask god answer"
     RemoveAskAns.OnClick = function()
         if ask_prompt("Deletion of custom message","Are you sure you want to delete the selected custom message? There will be no way of getting it back.","Yes","No") == 1 then
             table.remove(customMessageConfig.AskGodAnswer,botAdList.Selected+1)
