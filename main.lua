@@ -328,7 +328,7 @@ RemoveAd = custom.AddElement(custom,"Button")
         end
     end
 -- help
-custom.AddElement(custom,"HorizonatalSeparator")
+custom.AddElement(custom,"HorizontalSeparator")
 custom.AddElement(custom,"Label").Text = "Custom message information:"
 custom.AddElement(custom,"Label").Text = "Add `HUMAN` to mention the player or a random player(it will be random if it's a the advertisement)"
 custom.AddElement(custom,"Label").Text = "As example \"OMG IT'S HUMAN!\" will make bible bot say \"OMG IT'S 3DSBOY08\" if the player named 3dsboy08 join the game."
