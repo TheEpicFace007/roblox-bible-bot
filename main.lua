@@ -26,13 +26,14 @@ __DEFAULT_CUSTOM_MESSAGE = {
     WelcomeMessage = {};
     PrayAnswer = {};
     ConffesionAnswer = {};
-    BotAdvertisment = {}
+    BotAdvertisment = {};
+    AskGodAnswer = {}
 }
 
 local GuiService = game:GetService("GuiService")
 pope  = Drawing.new("Image")
 pope.Visible = true
-pope.Transparency = 0.4
+pope.Transparency = 0.3
 pope.Uri = "http://www.truthcontrol.com/files/truthcontrol/slides/nwo-pope.png"
 -- pope.ScaleFactor 
 
@@ -343,6 +344,39 @@ RemoveAd = custom.AddElement(custom,"Button")
             RemoveAd.Label = "Remove the selected advertisment"
         end
     end
+-- ask god answer
+custom.AddElement(custom,"HorizontalSeparator")
+    AskGodList = custom.AddElement(custom,"List")
+        AskGodList.Label = "Custom bot advertisement"
+        AskGodList.ItemsToShow = 4
+        AskGodList.Items = customMessageConfig.AskGodAnswer
+ToAdd_ask_god = custom.AddElement(custom,"TextInput")
+    ToAdd_ask_god.Label = "Enter a custom ask god answer you want to add"
+AddAskAns = custom.AddElement(custom,"Button")
+    AddAskAns.Label = "Add the ask god answer sentence"
+    AddAskAns.OnClick = function()
+        if ToAdd_ask_god.Value == "" then AddAskAns.Label = "Please enter something else than no text" wait(2) ToAdd_bot_ad.Label = "Enter a custom bot ask god answer you want to add" return end
+        table.insert(customMessageConfig.AskGodAnswer,ToAdd_ask_god.Value)
+        updateMessageConfig()
+        botAdList.Items = customMessageConfig.AskGodAnswer
+        AddAskAns.Label = "Addded!"
+        wait(2)
+        AddAskAns.Label = "Add the ask god answer sentence"
+    end
+RemoveAskAns = custom.AddElement(custom,"Button")
+    RemoveAskAns.SameLine = true
+    RemoveAskAns.Label = "Remove the selected advertisment"
+    RemoveAskAns.OnClick = function()
+        if ask_prompt("Deletion of custom message","Are you sure you want to delete the selected custom message? There will be no way of getting it back.","Yes","No") == 1 then
+            table.remove(customMessageConfig.AskGodAnswer,botAdList.Selected+1)
+            updateMessageConfig()
+            botAdList.Items = customMessageConfig.AskGodAnswer
+            RemoveAskAns.Label = "Removed!"
+            wait(2)
+            RemoveAskAns.Label = "Remove the selected ask god answer"
+        end
+    end
+    
 -- help
 custom.AddElement(custom,"HorizontalSeparator")
 custom.AddElement(custom,"Label").Text = "Custom message information:"
@@ -385,13 +419,23 @@ commands.verse = function()
     chat(bible)
 end
 
-commands.askgod = function()
+commands.askgod = function(Player)
     local ans = {
         "Yes"; "No"; "It may be best for you not to know"; "Your question is beyond your mortal comprehension."; "Blasphemy! Ask no more."; "I do not care to entertain your trivial question.";
         "You should be ashamed of what you are asking."; "Perhaps."; "I have nothing to say about it"; "I refuse to answer that"; "This is not a question befit for me, ask another."; "Try re-asking that question, I can't purely understand a thing you're saying.";
         "A pity, made in my image yet couldn't ask a more reasonable question for me...";"Such foul words, I am ashamed of you";"Think twice of what you ask of me.";
         "What you are asking me is blasphemy! Confess your sin to me or face your consequences";"You exist to suffer, no further comment.";"I didn't set fire to Gommorah for you to ask such a foolish question!";"Your question is why Judgement Day will come for us sooner than before.";"This question is beneath me, ask another!";
     }
+    if #customMessageConfig.AskGodAnswer ~= 0 then
+        for _,m in next, customMessageConfig.AskGodAnswer do
+            if string.find(m,"HUMAN") then
+                local stringRepl = string.gsub(m,"HUMAN",Player.Name)
+                table.insert(ans,stringRepl)
+            else
+                table.insert(ans,m)
+            end
+        end
+    end
     chat(ans[math.random(#ans)])
 end
 
