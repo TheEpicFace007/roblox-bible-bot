@@ -579,7 +579,7 @@ coroutine.resume(coroutine.create(function()
            "Submit to the divine authority of God and learn more of the one true faith by typing !help to know all the availaible commands of bible bot"
        }
         if #customMessageConfig.BotAdvertisment ~= 0 then 
-            local Player = game.Players:GetPlayers()
+            local Player = game:GetService("Players"):GetPlayers()
             for _,customMsg in next,customMessageConfig.BotAdvertisment do
                 if string.find(customMsg,"HUMAN") then
                     local stringRepl = string.gsub(customMsg,"HUMAN",
