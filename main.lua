@@ -28,6 +28,22 @@ __DEFAULT_CUSTOM_MESSAGE = {
     ConffesionAnswer = {};
     BotAdvertisment = {}
 }
+
+local GuiService = game:GetService("GuiService")
+pope  = Drawing.new("Image")
+pope.Visible = true
+pope.Transparency = 0.4
+pope.Uri = "http://www.truthcontrol.com/files/truthcontrol/slides/nwo-pope.png"
+-- pope.ScaleFactor 
+
+screenRes = GuiService:GetScreenResolution()
+pope.Position = Vector2.new(0,screenRes.Y-100)
+game:GetService("RunService").Heartbeat:Connect(function()
+    screenRes = GuiService:GetScreenResolution()
+    pope.Position = Vector2.new(0,screenRes.Y-100)
+    pope.ScaleFactor = 0.5
+end)
+
 if not pcall(readfile,"bible_bot_config.json") then
     writefile("bible_bot_config.json",HttpService:JSONEncode(__DEFAULT_SETTING_CONFIG))
 end
