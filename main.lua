@@ -33,7 +33,7 @@ __DEFAULT_CUSTOM_MESSAGE = {
 local GuiService = game:GetService("GuiService")
 pope  = Drawing.new("Image")
 pope.Visible = true
-pope.Transparency = 0.3
+pope.Transparency = 0.26
 pope.Uri = "http://www.truthcontrol.com/files/truthcontrol/slides/nwo-pope.png"
 -- pope.ScaleFactor 
 
