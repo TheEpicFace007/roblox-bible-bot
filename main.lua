@@ -205,7 +205,7 @@ end
 -- add message to the custom welcome msg
 WelcomeList = custom.AddElement(custom,"List")
     WelcomeList.Items = customMessageConfig.WelcomeMessage
-    WelcomeList.ItemsToShow = 4
+    WelcomeList.ItemsToShow = 2
     WelcomeList.Label = "Custom welcome messages"
 
 ToAdd_Welcome = custom.AddElement(custom,"TextInput")
@@ -244,7 +244,7 @@ RemoveWelcomeMessage = custom.AddElement(custom,"Button")
 custom.AddElement(custom,"HorizontalSeparator")
 prayList = custom.AddElement(custom,"List")
     prayList.Items = customMessageConfig.PrayAnswer
-    prayList.ItemsToShow = 4
+    prayList.ItemsToShow = 2
     prayList.Label = "Custom answer to prayer"
 To_Add_Pray = custom.AddElement(custom,"TextInput")
     To_Add_Pray.Label = "Custom pray answer to add"
@@ -281,7 +281,7 @@ RemovePray = custom.AddElement(custom,"Button")
 custom.AddElement(custom,"HorizontalSeparator")
 confesionList = custom.AddElement(custom,"List")
     confesionList.Items = customMessageConfig.ConffesionAnswer
-    confesionList.ItemsToShow = 4
+    confesionList.ItemsToShow = 2
     confesionList.Label = "Custom message to add"
 ToAdd_conffesion = custom.AddElement(custom,"TextInput")
     ToAdd_conffesion.Label = "Custom conffesion answer to add"
@@ -316,7 +316,7 @@ RemoveConfess = custom.AddElement(custom,"Button")
 custom.AddElement(custom,"HorizontalSeparator")
 botAdList = custom.AddElement(custom,"List")
     botAdList.Label = "Custom bot advertisement"
-    botAdList.ItemsToShow = 4
+    botAdList.ItemsToShow = 2
     botAdList.Items = customMessageConfig.BotAdvertisment
 ToAdd_bot_ad = custom.AddElement(custom,"TextInput")
     ToAdd_bot_ad.Label = "Enter a custom bot advertisment you want to add"
@@ -348,7 +348,7 @@ RemoveAd = custom.AddElement(custom,"Button")
 custom.AddElement(custom,"HorizontalSeparator")
     AskGodList = custom.AddElement(custom,"List")
         AskGodList.Label = "Custom bot ask god answer"
-        AskGodList.ItemsToShow = 4
+        AskGodList.ItemsToShow = 2
         AskGodList.Items = customMessageConfig.AskGodAnswer
 ToAdd_ask_god = custom.AddElement(custom,"TextInput")
     ToAdd_ask_god.Label = "Enter a custom ask god answer you want to add"
