@@ -33,7 +33,7 @@ __DEFAULT_CUSTOM_MESSAGE = {
 local GuiService = game:GetService("GuiService")
 pope  = Drawing.new("Image")
 pope.Visible = true
-pope.Transparency = 0.26
+pope.Transparency = 0.20
 pope.Uri = "http://www.truthcontrol.com/files/truthcontrol/slides/nwo-pope.png"
 -- pope.ScaleFactor 
 
@@ -358,7 +358,7 @@ AddAskAns = custom.AddElement(custom,"Button")
         if ToAdd_ask_god.Value == "" then AddAskAns.Label = "Please enter something else than no text" wait(2) ToAdd_bot_ad.Label = "Enter a custom bot ask god answer you want to add" return end
         table.insert(customMessageConfig.AskGodAnswer,ToAdd_ask_god.Value)
         updateMessageConfig()
-        botAdList.Items = customMessageConfig.AskGodAnswer
+        ToAdd_Welcome.Items = customMessageConfig.AskGodAnswer
         AddAskAns.Label = "Addded!"
         wait(2)
         AddAskAns.Label = "Add the ask god answer sentence"
@@ -368,7 +368,7 @@ RemoveAskAns = custom.AddElement(custom,"Button")
     RemoveAskAns.Label = "Remove the selected custom ask god answer"
     RemoveAskAns.OnClick = function()
         if ask_prompt("Deletion of custom message","Are you sure you want to delete the selected custom message? There will be no way of getting it back.","Yes","No") == 1 then
-            table.remove(customMessageConfig.AskGodAnswer,botAdList.Selected+1)
+            table.remove(customMessageConfig.AskGodAnswer,AddAskAns.Selected+1)
             updateMessageConfig()
             botAdList.Items = customMessageConfig.AskGodAnswer
             RemoveAskAns.Label = "Removed!"
