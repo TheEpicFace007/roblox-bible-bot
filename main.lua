@@ -462,6 +462,7 @@ end
 commands.pray = function(Player,message)
    local possibleAns = {"Amen";"Your greed terrifies me, confess your sin so that I may judge you by typing !confess [describe your foul actions here]";"Your prayer will be answered, Hallelujah!";"Your prayer has been rejected for blasphemy! type !confess [your sin here] for judgement.";"I understand your feelings, it shall be done soon";"What you ask will be done, be patient my son";"Your prayer will be granted, when the time comes."}
     if #customMessageConfig.PrayAnswer ~= 0 then
+        game:GetService("RunService").Heartbeat:Wait()
         for _,msg in next,possibleAns do
             if string.find(msg,"HUMAN") then
                 local messageRepl = string.gsub(msg,"HUMAN",Player.Name)
@@ -478,7 +479,7 @@ onPlayerChat = function(chat_type,recipient,message)
     for i,v in next,settingConfig.blacklisted do if v == recipient.Name then return  end end
     message = string.lower(message)
     if message:match(".*!ask.-god.*") then
-        commands:askgod()
+        commands.askgod(recipient)
     elseif message:match(".*!verse.*") or message:match(".!bible.*") then
         commands:verse()
     elseif message:match(".*!help.*") then
