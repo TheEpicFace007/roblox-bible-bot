@@ -493,6 +493,8 @@ onPlayerChat = function(chat_type,recipient,message)
         commands.pray(recipient,message)
     elseif message:match(".*!confess.*") then
         commands.confesion(recipient,message)
+    elseif message:match(".*shut up.*") then
+        chat("Listen here " ..recipient.Name ..",I will not tolerate you saying the words that consist of the letters 's h u t  u p' being said in this server, so take your own advice and close thine mouth in the name of the christian roblox place  owner.")
     end
 end
 
