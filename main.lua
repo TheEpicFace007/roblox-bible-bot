@@ -6,7 +6,7 @@
 -- it's meant for protosmasher widnow lib that authorize you to only have 1 window
 -- that have the same name
 -- math.randomseed is used to get a true random for the answers so the answer wont be always be the same
-assert(PROTOSMASHER_LOADED,"The exploit you are using is not compatible with this script. Please use protosmasher to be able to use the script.")
+assert(PROTOSMASHER_LOADED,"The exploit you are using is not compatible with this script. Please use protosmasher to be able to use the script.\n\nWhy is it like that? ProtoSSmasher have a ui lib where you can create ui within it's imgui and your expploit don't have that.")
 math.randomseed(tick())
 local __IS_TESTING = false
 local HttpService = game:GetService "HttpService"
@@ -440,7 +440,7 @@ commands.askgod = function(Player)
 end
 
 commands.help = function()
-    chat("!ask god [question] - Ask God a question | !verse - Study the holy bible | !help - Show this help menu | !confess [sin], confess your actions to God | !pray [prayer] pray for something")
+    chat("!ask  god [question] - Ask God a question | !verse - Study the holy bible | !help - Show this help menu | !confess [sin], confess your actions to God | !pray [prayer] pray for something")
     wait(0.5)
 end
 
