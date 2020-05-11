@@ -33,13 +33,8 @@ __DEFAULT_CUSTOM_MESSAGE = {
 local GuiService = game:GetService("GuiService")
 pope  = Drawing.new("Image")
 pope.Visible = true
-pope.Transparency = 0.10
-popeImage = {"https://bdd.worldofcars-forum.fr/bddcars/images/personnages/pope_pinion_iv.png";"http://www.truthcontrol.com/files/truthcontrol/slides/nwo-pope.png";
-            "http://www.worldmag.com/media/images/content/pope.png";"https://4.bp.blogspot.com/-xSI8nyauM18/WcBAGpsiSjI/AAAAAAAAJoo/nmaz4qBhHIcIpdKrSRMNDvN_Sqhvt47DACEwYBhgL/s1600/wwsvaaw3ax9x.png";
-            "https://spinachinourteeth.files.wordpress.com/2012/04/pope_hat.png";"https://pcjparish.org/wp-content/uploads/2018/06/pope_francis_transparent_001.png";
-            "http://pngimg.com/uploads/god/god_PNG75.png"
-        }
-pope.Uri = popeImage[math.random(#popeImage)]
+pope.Transparency = 0.60
+pope.Uri = "http://www.truthcontrol.com/files/truthcontrol/slides/nwo-pope.png"
 -- pope.ScaleFactor 
 
 screenRes = GuiService:GetScreenResolution()
@@ -137,7 +132,8 @@ blacklisted = panel.AddElement(panel,"List")
 
 AddBlacklistTextbox = panel.AddElement(panel,"TextInput")
     AddBlacklistTextbox.Label = "Add a user to be blacklisted from using the Bible Bot commands"
-    AddBlacklistTextbox.MultiLine = false
+
+
 
 AddBlacklistButton_Add_User = panel.AddElement(panel,"Button")
     AddBlacklistButton_Add_User.Label = "Blacklist user"
@@ -215,7 +211,9 @@ WelcomeList = custom.AddElement(custom,"List")
 
 ToAdd_Welcome = custom.AddElement(custom,"TextInput")
     ToAdd_Welcome.Label = "Custom welcome message to add"
-    ToAdd_Welcome.MultiLine = false
+
+
+
     ToAdd_Welcome.SameLine = false
 
 AddWelcomeMessage = custom.AddElement(custom,"Button")
@@ -253,7 +251,9 @@ prayList = custom.AddElement(custom,"List")
     prayList.Label = "Custom answer to prayer"
 To_Add_Pray = custom.AddElement(custom,"TextInput")
     To_Add_Pray.Label = "Custom pray answer to add"
-    To_Add_Pray.MultiLine = false
+
+
+
 AddPray = custom.AddElement(custom,"Button")
     AddPray.Label = "Add custom pray"
     AddPray.OnClick = function()
@@ -290,6 +290,9 @@ confesionList = custom.AddElement(custom,"List")
     confesionList.Label = "Custom message to add"
 ToAdd_conffesion = custom.AddElement(custom,"TextInput")
     ToAdd_conffesion.Label = "Custom conffesion answer to add"
+
+
+
 AddConfess = custom.AddElement(custom,"Button")
     AddConfess.Label = "Add a custom conffesion"
     AddConfess.OnClick = function()
@@ -325,6 +328,9 @@ botAdList = custom.AddElement(custom,"List")
     botAdList.Items = customMessageConfig.BotAdvertisment
 ToAdd_bot_ad = custom.AddElement(custom,"TextInput")
     ToAdd_bot_ad.Label = "Enter a custom bot advertisment you want to add"
+
+
+
 AddAd = custom.AddElement(custom,"Button")
     AddAd.Label = "Add the advertisment sentence"
     AddAd.OnClick = function()
@@ -357,6 +363,9 @@ custom.AddElement(custom,"HorizontalSeparator")
         AskGodList.Items = customMessageConfig.AskGodAnswer
 ToAdd_ask_god = custom.AddElement(custom,"TextInput")
     ToAdd_ask_god.Label = "Enter a custom ask god answer you want to add"
+
+
+
 AddAskAns = custom.AddElement(custom,"Button")
     AddAskAns.Label = "Add the ask god answer sentence"
     AddAskAns.OnClick = function()
@@ -373,7 +382,7 @@ RemoveAskAns = custom.AddElement(custom,"Button")
     RemoveAskAns.Label = "Remove the selected custom ask god answer"
     RemoveAskAns.OnClick = function()
         if ask_prompt("Deletion of custom message","Are you sure you want to delete the selected custom message? There will be no way of getting it back.","Yes","No") == 1 then
-            table.remove(customMessageConfig.AskGodAnswer,AddAskAns.Selected+1)
+            table.remove(customMessageConfig.AskGodAnswer,AskGodList.Selected+1)
             updateMessageConfig()
             botAdList.Items = customMessageConfig.AskGodAnswer
             RemoveAskAns.Label = "Removed!"
@@ -493,8 +502,8 @@ onPlayerChat = function(chat_type,recipient,message)
         commands.pray(recipient,message)
     elseif message:match(".*!confess.*") then
         commands.confesion(recipient,message)
-    elseif message:match(".*shut up.*") then
-        chat("Listen here " ..recipient.Name ..",I will not tolerate you saying the words that consist of the letters 's h u t  u p' being said in this server, so take your own advice and close thine mouth in the name of the christian roblox place  owner.")
+    -- elseif string.find(message,"shut up") then
+        -- chat("Listen here " ..recipient.Name ..",I will not tolerate you saying the words that consist of the letters 's h u t  u p' being said in this server, so take your own advice and close thine mouth in the name of the christian roblox place  owner.")
     end
 end
 
