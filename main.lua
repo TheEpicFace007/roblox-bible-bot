@@ -490,9 +490,10 @@ commands.pray = function(Player,message)
     chat(possibleAns[math.random(#possibleAns)])
 end
 
--- i seriously do not know what im doing so im taking a leap of faith wish me luck boyos - Gaijin
+-- i seriously do not know what im doing so im taking a leap of faith so wish me luck boyos - Gaijin
+-- i just copied everything from the confession function rofl - also Gaijin
 commands.shut_up = function(Player,message)
-    local possibleAns = {"Do not say that out loud, ";"Do you really want me to cleanse your mouth with holy water?";"I will not tolerate you saying the words that consist of the letters 's h u t  u p' being said in this server, so take your own advice and close thine mouth in the name of the Christian Roblox place owner."}
+    local possibleAns = {"Do not say that out loud, ";"Do you really want me to cleanse your mouth with holy water?";"I will not tolerate you saying the words that consist of the letters 's h u t  u p' being said in this server, so take your own advice and close thine mouth in the name of the Christian Roblox place owner.";"That is not how you treat the members of the Church,"}
     if #customMessageConfig.AntiShutUpMessage ~= 0 then
         game:GetService("RunService").Heartbeat:Wait()
         for _,msg in next,possibleAns do
@@ -531,17 +532,17 @@ Players.PlayerChatted:Connect(onPlayerChat)
 Players.PlayerAdded:Connect(function(NewPlayer)
     local welcomeSentence = {
         "Greetings " .. NewPlayer.Name .. ", study the bible to further your blossoming faith by chatting !verse";
-        "Welcome " .. NewPlayer.Name .. "! to Bibleblox! study the bible with upmost vigor by chatting !verse";
+        "Welcome " .. NewPlayer.Name .. "! to Bibleblox! Study the bible with upmost vigor by chatting !verse";
         "Welcome to the holiest place in Roblox " .. NewPlayer.Name .. ". Study the bible as soon as possible by chatting !verse";
-        "Feel free to ask any question to God by chatting !ask god [question]";
-        "Welcome to the most Christian place in Roblox " .. NewPlayer.Name;
+        "Feel free to ask any question to Our Almighty God by chatting !ask god [question]";
+        "Welcome to the most Christian place in Roblox " .. NewPlayer.Name .. ".";
         function()
             if os.date("*t").hour > 12 and os.date("*t").hour < 18 then
-                return "Welcome " .. NewPlayer.Name .. " to the afternoon bible study session. Open your bible by chatting !verse"
+                return "Welcome " .. NewPlayer.Name .. " to the afternoon bible study session. Open your bible by chatting !verse."
             elseif os.date("*t").hour > 18  or os.date("*t").hour < 5 then
-                return "Welcome " .. NewPlayer.Name .. " to the night bible study session. Open your bible by chatting !verse"
+                return "Welcome " .. NewPlayer.Name .. " to the night bible study session. Open your bible by chatting !verse."
             elseif os.date("*t").hour > 5  and os.date("*t").hour < 12 then
-                return "Welcome " .. NewPlayer.Name .. " to the morning bible study session. Open your bible by chatting !verse"
+                return "Welcome " .. NewPlayer.Name .. " to the morning bible study session. Open your bible by chatting !verse."
             end
         end;
         function()
