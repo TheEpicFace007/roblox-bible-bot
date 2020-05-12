@@ -27,7 +27,8 @@ __DEFAULT_CUSTOM_MESSAGE = {
     PrayAnswer = {};
     ConffesionAnswer = {};
     BotAdvertisment = {};
-    AskGodAnswer = {}
+    AskGodAnswer = {};
+    AntiShutUpMessage = {}
 }
 
 local GuiService = game:GetService("GuiService")
@@ -489,6 +490,25 @@ commands.pray = function(Player,message)
     chat(possibleAns[math.random(#possibleAns)])
 end
 
+-- i seriously do not know what im doing so im taking a leap of faith so wish me luck boyos - Gaijin
+-- i just copied everything from the confession function rofl - also Gaijin
+commands.shut_up = function(Player,message)
+    local possibleAns = {"Do not say that out loud, ";"Do you really want me to cleanse your mouth with holy water?";"I will not tolerate you saying the words that consist of the letters 's h u t  u p' being said in this server, so take your own advice and close thine mouth in the name of the Christian Roblox place owner.";"That is not how you treat the members of the Church,"}
+    if #customMessageConfig.AntiShutUpMessage ~= 0 then
+        game:GetService("RunService").Heartbeat:Wait()
+        for _,msg in next,possibleAns do
+            if string.find(msg,"HUMAN") then
+                local messageRepl = string.gsub(msg,"HUMAN",Player.Name)
+                table.insert(possibleAns,messageRepl)
+            else
+                table.insert(possibleAns,msg)
+            end
+        end
+    end
+    chat(possibleAns[math.random(#possibleAns)])
+end
+    
+
 onPlayerChat = function(chat_type,recipient,message)
     for i,v in next,settingConfig.blacklisted do if v == recipient.Name then return  end end
     message = string.lower(message)
@@ -502,8 +522,8 @@ onPlayerChat = function(chat_type,recipient,message)
         commands.pray(recipient,message)
     elseif message:match(".*!confess.*") then
         commands.confesion(recipient,message)
-    -- elseif string.find(message,"shut up") then
-        -- chat("Listen here " ..recipient.Name ..",I will not tolerate you saying the words that consist of the letters 's h u t  u p' being said in this server, so take your own advice and close thine mouth in the name of the christian roblox place  owner.")
+    elseif string.find(message,"shut up") then
+        commands.shut_up(recipient,message)
     end
 end
 
@@ -512,24 +532,24 @@ Players.PlayerChatted:Connect(onPlayerChat)
 Players.PlayerAdded:Connect(function(NewPlayer)
     local welcomeSentence = {
         "Greetings " .. NewPlayer.Name .. ", study the bible to further your blossoming faith by chatting !verse";
-        "Welcome " .. NewPlayer.Name .. "! to Bibleblox! study the bible with upmost vigor by chatting !verse";
+        "Welcome " .. NewPlayer.Name .. "! to Bibleblox! Study the bible with upmost vigor by chatting !verse";
         "Welcome to the holiest place in Roblox " .. NewPlayer.Name .. ". Study the bible as soon as possible by chatting !verse";
-        "Feel free to ask any question to God by chatting !ask god [question]";
-        "Welcome to the most Christian place in Roblox " .. NewPlayer.Name;
+        "Feel free to ask any question to Our Almighty God by chatting !ask god [question]";
+        "Welcome to the most Christian place in Roblox " .. NewPlayer.Name .. ".";
         function()
             if os.date("*t").hour > 12 and os.date("*t").hour < 18 then
-                return "Welcome " .. NewPlayer.Name .. " to the afternoon bible study session. Open your bible by chatting !verse"
+                return "Welcome " .. NewPlayer.Name .. " to the afternoon bible study session. Open your bible by chatting !verse."
             elseif os.date("*t").hour > 18  or os.date("*t").hour < 5 then
-                return "Welcome " .. NewPlayer.Name .. " to the night bible study session. Open your bible by chatting !verse"
+                return "Welcome " .. NewPlayer.Name .. " to the night bible study session. Open your bible by chatting !verse."
             elseif os.date("*t").hour > 5  and os.date("*t").hour < 12 then
-                return "Welcome " .. NewPlayer.Name .. " to the morning bible study session. Open your bible by chatting !verse"
+                return "Welcome " .. NewPlayer.Name .. " to the morning bible study session. Open your bible by chatting !verse."
             end
         end;
         function()
             if os.date("*t").hour > 12 and os.date("*t").hour < 18 then
                 return "Gosh! you're late to the afternoon bible study session! Open your bible by chatting !verse quickly!!"
             elseif os.date("*t").hour > 18  or os.date("*t").hour < 5 then
-                return "I can't believe you are, ahem, THIS late to the night bible study! Open the bible asap(chat !verse)"
+                return "I can't believe you are, ahem, THIS late to the night bible study! Open the bible ASAP(chat !verse)"
             elseif os.date("*t").hour > 5  and os.date("*t").hour < 12 then
                 return "Oh my! You are late to the morning bible study session! Chat !verse to open the bible"
             end
