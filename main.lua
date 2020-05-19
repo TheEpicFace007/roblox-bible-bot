@@ -28,7 +28,6 @@ __DEFAULT_CUSTOM_MESSAGE = {
     ConffesionAnswer = {};
     BotAdvertisment = {};
     AskGodAnswer = {};
-    AntiShutUpMessage = {}
 }
 
 local GuiService = game:GetService("GuiService")
@@ -38,6 +37,7 @@ pope.Transparency = 0.60
 pope.Uri = "http://www.truthcontrol.com/files/truthcontrol/slides/nwo-pope.png"
 -- pope.ScaleFactor 
 
+-- you should see a transluscent pope pop out near the lower left corner of the screen - Gaijin
 screenRes = GuiService:GetScreenResolution()
 pope.Position = Vector2.new(0,screenRes.Y-100)
 game:GetService("RunService").Heartbeat:Connect(function()
@@ -490,24 +490,7 @@ commands.pray = function(Player,message)
     chat(possibleAns[math.random(#possibleAns)])
 end
 
--- i seriously do not know what im doing so im taking a leap of faith so wish me luck boyos - Gaijin
--- i just copied everything from the confession function rofl - also Gaijin
-commands.shut_up = function(Player,message)
-    local possibleAns = {"Do not say that out loud, ";"Do you really want me to cleanse your mouth with holy water?";"I will not tolerate you saying the words that consist of the letters 's h u t  u p' being said in this server, so take your own advice and close thine mouth in the name of the Christian Roblox place owner.";"That is not how you treat the members of the Church,"}
-    if #customMessageConfig.AntiShutUpMessage ~= 0 then
-        game:GetService("RunService").Heartbeat:Wait()
-        for _,msg in next,possibleAns do
-            if string.find(msg,"HUMAN") then
-                local messageRepl = string.gsub(msg,"HUMAN",Player.Name)
-                table.insert(possibleAns,messageRepl)
-            else
-                table.insert(possibleAns,msg)
-            end
-        end
-    end
-    chat(possibleAns[math.random(#possibleAns)])
-end
-    
+-- i removed the anti shut up message - Gaijin
 
 onPlayerChat = function(chat_type,recipient,message)
     for i,v in next,settingConfig.blacklisted do if v == recipient.Name then return  end end
@@ -522,8 +505,6 @@ onPlayerChat = function(chat_type,recipient,message)
         commands.pray(recipient,message)
     elseif message:match(".*!confess.*") then
         commands.confesion(recipient,message)
-    elseif string.find(message,"shut up") then
-        commands.shut_up(recipient,message)
     end
 end
 
@@ -532,7 +513,7 @@ Players.PlayerChatted:Connect(onPlayerChat)
 Players.PlayerAdded:Connect(function(NewPlayer)
     local welcomeSentence = {
         "Greetings " .. NewPlayer.Name .. ", study the bible to further your blossoming faith by chatting !verse";
-        "Welcome " .. NewPlayer.Name .. "! to Bibleblox! Study the bible with upmost vigor by chatting !verse";
+        "Welcome, " .. NewPlayer.Name .. ", to Bibleblox! Study the bible with upmost vigor by chatting !verse";
         "Welcome to the holiest place in Roblox " .. NewPlayer.Name .. ". Study the bible as soon as possible by chatting !verse";
         "Feel free to ask any question to Our Almighty God by chatting !ask god [question]";
         "Welcome to the most Christian place in Roblox " .. NewPlayer.Name .. ".";
@@ -601,7 +582,7 @@ oldState = isNotDoingAd.State
 --[[ game:GetService("RunService").Heartbeat:Connect(function()
 
 end)
- ]]
+--]]
 __TIME_WITHIN_EACH__CONFIG_SAVE = 0.1
 -- advertisement corutine
 coroutine.resume(coroutine.create(function()
@@ -609,8 +590,8 @@ coroutine.resume(coroutine.create(function()
        ad = {
            "Greetings all, I am Bible bot. I guide the masses towards realizing the true faith. Chat !help to know all the available commands for me";
            "I have come forth to bring the good news to all! Chat !verse to hear of it";
-           "Do not commit sin or suffer for eternity in hell! Chat !help to know the availaible commands for bible bot";
-           "Always remember to pray to God. Chat !pray [someone or something you want] to learn what He has in store for your prayer";
+           "Do not commit sin or suffer for eternity in hell! Chat !help to know the availaible commands for Bible bot.";
+           "Always remember to pray to God. Chat !pray [for someone or for something you want] to learn what He has in store for your prayer.";
            "Remember to study the bible to further your love for God. type !verse to study a verse of the bible, Chat !help to know other commands";
            "Submit to the divine authority of God and learn more of the one true faith by typing !help to know all the availaible commands of bible bot"
        }
