@@ -9,7 +9,7 @@
 assert(PROTOSMASHER_LOADED,"The exploit you are using is not compatible with this script. Please use protosmasher to be able to use the script.\nWhy? protosmasger have a ui lib where you can make ui based off protosmasher imgui.\nOnly protosmasher offer that so what I recommend you to do is to ask your exploit dev for a 1:1 copy of that library")
 math.randomseed(tick())
 local __IS_TESTING = false
-local HttpService = game:GetService "HttpService"
+local HttpService = game:GetService("HttpService")
 local Players = game:GetService("Players")
 -- config
 __DEFAULT_SETTING_CONFIG = {
@@ -33,7 +33,7 @@ __DEFAULT_CUSTOM_MESSAGE = {
 local GuiService = game:GetService("GuiService")
 pope  = Drawing.new("Image")
 pope.Visible = true
-pope.Transparency = 0.60
+pope.Transparency = 0.10
 pope.Uri = "http://www.truthcontrol.com/files/truthcontrol/slides/nwo-pope.png"
 -- pope.ScaleFactor 
 
@@ -490,7 +490,7 @@ commands.pray = function(Player,message)
     chat(possibleAns[math.random(#possibleAns)])
 end
 
--- i removed the anti shut up message - Gaijin
+-- i removed the anti shut up message - Gaijin (Quake504)
 
 onPlayerChat = function(chat_type,recipient,message)
     for i,v in next,settingConfig.blacklisted do if v == recipient.Name then return  end end
@@ -570,9 +570,9 @@ Players.PlayerAdded:Connect(function(NewPlayer)
 end)
 
 ad = {
-    "Greetings all, I am Bible bot! And I guide the masses towards realizing the true faith. Chat !help to know all the available commands for me";
+    "Greetings fellow people of Christ, I am Bible bot! And I guide the masses towards realizing the true faith. Chat !help to know all the available commands for me";
     "I have come forth to bring the good news to all! Chat !verse to hear of it";
-    "Do not live in sin or suffer for eternity in hell! Chat !help to know the availaible commands for bible bot";
+    "Do not live in sin or suffer for eternity in hell! Chat !help to expand your knowledge of the availaible commands for bible bot";
     "Always remember to pray to God. Chat !pray [someone or something you want] to learn what He has in store for your prayer";
     "Remember to study the bible and praise Our Lord God to further your love for Him. type !verse to study a verse of the bible, Chat !help to know other commands";
     "Submit to the divine authority of God and learn more of the one true faith by typing !help to know all the availaible commands of bible bot"
