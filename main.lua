@@ -31,11 +31,17 @@ __DEFAULT_CUSTOM_MESSAGE = {
 }
 
 local GuiService = game:GetService("GuiService")
-pope  = Drawing.new("Image")
+pope = Drawing.new("Image")
 pope.Visible = true
+-- sets the pope's transparency
 pope.Transparency = 0.10
-pope.Uri = "http://www.truthcontrol.com/files/truthcontrol/slides/nwo-pope.png"
--- pope.ScaleFactor 
+popeImage = {"https://bdd.worldofcars-forum.fr/bddcars/images/personnages/pope_pinion_iv.png";"http://www.truthcontrol.com/files/truthcontrol/slides/nwo-pope.png";
+            "http://www.worldmag.com/media/images/content/pope.png";"https://4.bp.blogspot.com/-xSI8nyauM18/WcBAGpsiSjI/AAAAAAAAJoo/nmaz4qBhHIcIpdKrSRMNDvN_Sqhvt47DACEwYBhgL/s1600/wwsvaaw3ax9x.png";
+            "https://spinachinourteeth.files.wordpress.com/2012/04/pope_hat.png";"https://pcjparish.org/wp-content/uploads/2018/06/pope_francis_transparent_001.png";
+            "http://pngimg.com/uploads/god/god_PNG75.png"
+            }
+-- chooses which pope image to use
+pope.Uri = popeImage[math.random(#popeImage)]
 
 -- you should see a transluscent pope pop out near the lower left corner of the screen - Gaijin
 screenRes = GuiService:GetScreenResolution()
