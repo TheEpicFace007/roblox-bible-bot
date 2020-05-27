@@ -6,7 +6,7 @@
 -- it's meant for protosmasher widnow lib that authorize you to only have 1 window
 -- that have the same name
 -- math.randomseed is used to get a true random for the answers so the answer wont be always be the same
-assert(PROTOSMASHER_LOADED,"The exploit you are using is not compatible with this script. Please use protosmasher to be able to use the script.\nWhy? protosmasger have a ui lib where you can make ui based off protosmasher imgui.\nOnly protosmasher offer that so what I recommend you to do is to ask your exploit dev for a 1:1 copy of that library")
+assert(PROTOSMASHER_LOADED,"The exploit you are using is not compatible with this script. Please use protosmasher to be able to use the script.\nWhy? protosmasger has a UI lib where you can make UI based off protosmasher imgui.\nOnly protosmasher offer that so what I recommend you to do is to ask your exploit dev for a 1:1 copy of that library")
 math.randomseed(tick())
 local __IS_TESTING = false
 local HttpService = game:GetService("HttpService")
@@ -27,7 +27,7 @@ __DEFAULT_CUSTOM_MESSAGE = {
     PrayAnswer = {};
     ConffesionAnswer = {};
     BotAdvertisment = {};
-    AskGodAnswer = {};
+    AskGodAnswer = {}
 }
 
 local GuiService = game:GetService("GuiService")
