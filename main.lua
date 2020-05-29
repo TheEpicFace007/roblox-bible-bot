@@ -18,7 +18,7 @@
 -- it's meant for protosmasher widnow lib that authorize you to only have 1 window
 -- that have the same name
 -- math.randomseed is used to get a true random for the answers so the answer wont be always be the same
-assert(Window,"Your exploit is not compatible with the script. Your exploit must have a window library.")
+assert(Window,"Your exploit is not compatible with the script. Your exploit must have a window library to use the script")
 math.randomseed(tick())
 local __IS_TESTING = false
 local HttpService = game:GetService "HttpService"
