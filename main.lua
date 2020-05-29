@@ -1,12 +1,24 @@
 -- License notice: AGPL-3.0-only
--- (More information about the license at the end of the file)
+    --[[
+ Bible bot is free software: you can redistribute it and/or modify
+    it under the terms of the GNU AFFERO General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
 
+    Bible bot is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU AFFERO General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Bible bot.  If not, see <https://www.gnu.org/licenses/>.
+--]]
 -- it allow me to generatom infinite window 0that have the "same" name
 -- it's for testing purpose, do not touch if you arent developping the scrip
 -- it's meant for protosmasher widnow lib that authorize you to only have 1 window
 -- that have the same name
 -- math.randomseed is used to get a true random for the answers so the answer wont be always be the same
-assert(PROTOSMASHER_LOADED,"The exploit you are using is not compatible with this script. Please use protosmasher to be able to use the script.\nWhy? protosmasger have a ui lib where you can make ui based off protosmasher imgui.\nOnly protosmasher offer that so what I recommend you to do is to ask your exploit dev for a 1:1 copy of that library")
+assert(Window,"Your exploit is not compatible with the script. Your exploit must have a window library.")
 math.randomseed(tick())
 local __IS_TESTING = false
 local HttpService = game:GetService "HttpService"
@@ -643,17 +655,3 @@ coroutine.resume(coroutine.create(function()
         updateSettingConfig()
     end
 end))
---[[
- Bible bot is free software: you can redistribute it and/or modify
-    it under the terms of the GNU AFFERO General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    Bible bot is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU AFFERO General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with Bible bot.  If not, see <https://www.gnu.org/licenses/>.
---]]
